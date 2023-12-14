@@ -30,7 +30,7 @@ export default function Sidebar() {
     },
   ];
   return (
-    <div className="p-4 flex gap-6 flex-col">
+    <div className="p-4 flex gap-6 flex-col items-center md:items-start">
       <Link href="">
         <Image src="/logo-white.png" alt="logo de X" width={30} height={30} />
       </Link>
@@ -40,14 +40,14 @@ export default function Sidebar() {
           <Link
             href={link.href}
             className={clsx(
-              "flex items-center gap-3 hover:bg-white hover:bg-opacity-10 hover:rounded-full p-2 translate-y-2",
+              "flex items-center gap-3 hover:bg-white hover:bg-opacity-10 hover:rounded-full p-2",
               {
                 "bg-white bg-opacity-10 rounded-full": link.active,
               }
             )}
           >
             <Icon />
-            <span className="font-medium">{link.label}</span>
+            <span className="font-medium hidden md:block">{link.label}</span>
           </Link>
         );
       })}
