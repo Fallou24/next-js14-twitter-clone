@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
+import Sidebar from "./ui/Sidebar";
+import { ThemeProvider } from "./ui/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,7 +20,14 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={inter.className+" h-full"}>{children}</body>
+        <body className={inter.className + " h-full"}>
+          <ThemeProvider attribute="class" defaultTheme="system">
+            <div className="flex gap-4 max-w-5xl mx-auto">
+              <Sidebar />
+              {children}
+            </div>
+          </ThemeProvider>
+        </body>
       </html>
     </ClerkProvider>
   );
