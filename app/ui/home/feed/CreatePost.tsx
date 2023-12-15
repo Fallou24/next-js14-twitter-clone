@@ -4,7 +4,7 @@ import React from "react";
 
 export default function CreatePost() {
   return (
-    <div className="flex gap-2 items-top px-4 mb-2">
+    <div className="flex gap-2 items-top px-4 pt-2 mb-2">
       <p>
         <Image
           src="/hero.png"
@@ -16,7 +16,7 @@ export default function CreatePost() {
       </p>
       <div className="w-full">
         <form action="">
-          <input type="text" placeholder="What's happening ?" className="p-2 bg-transparent focus:outline-none" />
+          <input type="text" placeholder="What's happening ?" className="py-2 bg-transparent focus:outline-none" />
           <div className="flex justify-between items-center">
             <label htmlFor="post-image">
               <ImageIcon color="#1A8CD8" />

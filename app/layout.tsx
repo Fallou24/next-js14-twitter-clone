@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={inter.className + " h-full"}>
+        <body className={inter.className}>
           <ThemeProvider attribute="class" defaultTheme="system">
             <div className="flex gap-4 max-w-5xl mx-auto">
               <Sidebar />
