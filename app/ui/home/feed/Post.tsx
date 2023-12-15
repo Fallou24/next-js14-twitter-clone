@@ -21,9 +21,18 @@ export default function Post() {
             <p className="text-[#6E767D] text-sm">@JohnDoe</p>
             <p className="text-[#6E767D] text-sm">7m</p>
           </div>
-          <p className="font-normal mb-3">
+          <p className="font-normal mb-1">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque
             recusandae delectus odio laudantium excepturi eaque.
+          </p>
+          <p className="mb-3 relative h-52">
+            <Image
+              src="/post-img.jpg"
+              alt="Image du post"
+              fill={true}
+              objectFit="cover"
+              className="rounded-3xl"
+            />
           </p>
           <PostActions />
         </div>
