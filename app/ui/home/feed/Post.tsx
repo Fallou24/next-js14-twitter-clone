@@ -30,8 +30,8 @@ export default function Post() {
               src="/post-img.jpg"
               alt="Image du post"
               fill={true}
-              objectFit="cover"
-              className="rounded-3xl"
+            
+              className="rounded-3xl object-cover"
             />
           </p>
           <PostActions />

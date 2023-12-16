@@ -16,10 +16,10 @@ export default function Suggestions() {
               className="rounded-full object-cover"
             />
           </p>
-          <p>
-            <h3 className="font-medium">John Doe</h3>
+          <div>
+            <p className="font-medium">John Doe</p>
             <p className="text-gray-100 text-opacity-70 text-sm">@JohnDoe</p>
-          </p>
+          </div>
         </div>
         <button className="bg-white text-black rounded-3xl px-6 p-1">
           Suivre
@@ -36,10 +36,10 @@ export default function Suggestions() {
               className="rounded-full object-cover"
             />
           </p>
-          <p>
+          <div>
             <h3 className="font-medium">John Doe</h3>
             <p className="text-gray-100 text-opacity-70 text-sm">@JohnDoe</p>
-          </p>
+          </div>
         </div>
         <button className="bg-white text-black rounded-3xl px-6 p-1">
           Suivre
@@ -56,10 +56,10 @@ export default function Suggestions() {
               className="rounded-full object-cover"
             />
           </p>
-          <p>
+          <div>
             <h3 className="font-medium">John Doe</h3>
             <p className="text-gray-100 text-opacity-70 text-sm">@JohnDoe</p>
-          </p>
+          </div>
         </div>
         <button className="bg-white text-black rounded-3xl px-6 p-1">
           Suivre

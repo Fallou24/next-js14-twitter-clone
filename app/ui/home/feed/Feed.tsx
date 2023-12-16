@@ -5,7 +5,7 @@ import Post from "./Post";
 
 export default function Feed() {
   return (
-    <div className="w-full pt-4 md:w-3/5 border-x border-x-border-color">
+    <div className="w-full md:w-3/5 border-x border-x-border-color">
       <FeedHeader />
       <hr className="border-border-color border-1" />
       <CreatePost />
