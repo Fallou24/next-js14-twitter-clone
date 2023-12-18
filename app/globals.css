@@ -8,3 +8,11 @@
     background: #1A8CD8;
     border-radius: 24px;
 }
+
+.page_content{
+    @apply min-h-screen w-full md:w-3/5 border-x border-x-border-color
+}
+
+.page_header{
+    @apply p-3 px-4 sticky top-0 z-10 bg-[#121212]
+}

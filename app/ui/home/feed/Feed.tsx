@@ -1,12 +1,14 @@
 import React from "react";
 import CreatePost from "./CreatePost";
-import FeedHeader from "./FeedHeader";
 import Post from "./Post";
+import PageHeader from "../../PageHeader";
 
 export default function Feed() {
   return (
-    <div className="w-full md:w-3/5 border-x border-x-border-color">
-      <FeedHeader />
+    <div className="page_content">
+      <PageHeader>
+        <h2 className="font-bold text-lg">Home</h2>
+      </PageHeader>
       <hr className="border-border-color border-1" />
       <CreatePost />
       <hr className="border-border-color border-1" />
