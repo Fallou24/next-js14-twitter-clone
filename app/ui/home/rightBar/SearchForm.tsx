@@ -1,5 +1,4 @@
 import { Search } from "lucide-react";
-import React from "react";
 
 export default function SearchForm() {
   return (
@@ -14,7 +13,7 @@ export default function SearchForm() {
         type="text"
         id="search"
         placeholder="Rechercher un utilisateur"
-        className="bg-transparent p-2 focus:outline-none"
+        className="bg-transparent p-2 focus:outline-none w-full"
       />
     </form>
   );

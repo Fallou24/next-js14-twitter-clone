@@ -18,6 +18,7 @@ export default function CreatePost() {
           <textarea
             placeholder="What's happening ?"
             className="w-full py-2 bg-transparent focus:outline-none resize-none"
+            rows={1}
           ></textarea>
           <div className="flex justify-between items-center">
             <label htmlFor="post-image">

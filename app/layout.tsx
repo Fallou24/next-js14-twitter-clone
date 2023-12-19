@@ -19,8 +19,8 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="fr">
-        <body className={inter.className}>
-          <ThemeProvider attribute="class" defaultTheme="system">
+        <body className={inter.className+" w-full"}>
+          <ThemeProvider attribute="class" defaultTheme="dark">
             {children}
           </ThemeProvider>
         </body>

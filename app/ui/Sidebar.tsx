@@ -13,24 +13,24 @@ export default function Sidebar() {
     {
       label: "Home",
       icon: HomeIcon,
-      href: "",
+      href: "/",
       active: pathName === "/",
     },
     {
-      label: "Messages",
+      label: "Notifications",
       icon: MailIcon,
-      href: "",
-      active: pathName === "/messages",
+      href: "/notifications",
+      active: pathName === "/notifications",
     },
     {
       label: "Profile",
       icon: User,
-      href: "",
+      href: "/profile",
       active: pathName === "profile",
     },
   ];
   return (
-    <div className="p-4 flex gap-6 flex-col items-center md:items-start sticky top-4">
+    <div className="p-2 md:p-4 flex gap-4 flex-col items-center md:items-start sticky top-4">
       <Link href="">
         <Image src="/logo-white.png" alt="logo de X" width={30} height={30} />
       </Link>

@@ -10,7 +10,7 @@
 }
 
 .page_content{
-    @apply min-h-screen w-full md:w-3/5 border-x border-x-border-color
+    @apply min-h-screen w-full lg:w-3/5 border-x border-x-border-color
 }
 
 .page_header{

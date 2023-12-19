@@ -8,11 +8,11 @@ export default function PlateformLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="w-full flex gap-4 max-w-6xl mx-auto">
+    <div className="flex max-w-6xl mx-auto">
       <div className="sticky top-4">
         <Sidebar />
       </div>
-      <div className="w-full flex gap-2">
+      <div className="flex gap-2">
         {children}
         <RightBar />
       </div>
