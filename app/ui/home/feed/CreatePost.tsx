@@ -1,6 +1,5 @@
 import { ImageIcon } from "lucide-react";
 import Image from "next/image";
-import React from "react";
 
 export default function CreatePost() {
   return (
@@ -16,7 +15,10 @@ export default function CreatePost() {
       </p>
       <div className="w-full">
         <form action="">
-          <input type="text" placeholder="What's happening ?" className="py-2 bg-transparent focus:outline-none" />
+          <textarea
+            placeholder="What's happening ?"
+            className="w-full py-2 bg-transparent focus:outline-none resize-none"
+          ></textarea>
           <div className="flex justify-between items-center">
             <label htmlFor="post-image">
               <ImageIcon color="#1A8CD8" />
@@ -27,7 +29,9 @@ export default function CreatePost() {
               id="post-image"
               className="hidden"
             />
-            <button type="submit" className="button">Poster</button>
+            <button type="submit" className="button">
+              Poster
+            </button>
           </div>
         </form>
       </div>

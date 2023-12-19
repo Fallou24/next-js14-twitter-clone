@@ -16,3 +16,7 @@
 .page_header{
     @apply p-3 px-4 sticky top-0 z-10 bg-[#121212]
 }
+
+button:disabled{
+    opacity: .7;
+}
