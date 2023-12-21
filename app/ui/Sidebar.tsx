@@ -39,6 +39,7 @@ export default function Sidebar() {
         return (
           <Link
             href={link.href}
+            key={link.href}
             className={clsx(
               "flex items-center gap-3 hover:bg-white hover:bg-opacity-10 hover:rounded-full p-2",
               {

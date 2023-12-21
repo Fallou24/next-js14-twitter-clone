@@ -13,10 +13,13 @@ datasource db {
 model Post {
   id        String    @id @default(auto()) @map("_id") @db.ObjectId
   userId    String
-  image     String
+  postImg     String?
   content   String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+  userImg   String
+  username  String
+  fullName String
   likes     Like[]
   comments  Comment[]
 
@@ -28,8 +31,8 @@ model Like {
   userId    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Post      Post?    @relation(fields: [postId], references: [id])
-  postId    String?  @db.ObjectId
+  Post      Post     @relation(fields: [postId], references: [id])
+  postId    String   @db.ObjectId
 }
 
 model Comment {
@@ -37,6 +40,6 @@ model Comment {
   userId    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Post      Post?    @relation(fields: [postId], references: [id])
-  postId    String?  @db.ObjectId
+  Post      Post     @relation(fields: [postId], references: [id])
+  postId    String   @db.ObjectId
 }
