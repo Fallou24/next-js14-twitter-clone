@@ -4,16 +4,36 @@ import prisma from "./db";
 import { z } from "zod";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { put } from "@vercel/blob";
 
 const postSchema = z.object({
   content: z.string().min(1),
+  postImg: z.string().optional(),
 });
 
 export async function createPost(formData: FormData) {
+  const file = formData.get("file") as File;
+
+  const filename: string = file.name;
+
   const user = await currentUser();
-  const validData = postSchema.safeParse({
-    content: formData.get("content"),
-  });
+  let validData!: any;
+
+  if (file.size > 0) {
+    const blob = await put(filename, file, {
+      access: "public",
+    });
+
+    validData = postSchema.safeParse({
+      content: formData.get("content"),
+      postImg: blob.url,
+    });
+  } else {
+    validData = postSchema.safeParse({
+      content: formData.get("content"),
+    });
+  }
+
   if (!user) {
     redirect("/sign-in");
   }

@@ -2,11 +2,13 @@
 import { createPost } from "@/app/lib/actions";
 import { ImageIcon } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import PostButton from "./PostButton";
 
 export default function CreatePost() {
   const [value, setValue] = useState("");
-
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
   return (
     <div className="flex gap-2 items-top px-4 pt-2 mb-2">
       <p>
@@ -19,10 +21,15 @@ export default function CreatePost() {
         />
       </p>
       <div className="w-full">
-        <form action={createPost}>
+        <form
+          ref={formRef}
+          action={async (formData) => {
+            await createPost(formData);
+            formRef.current?.reset();
+          }}
+        >
           <textarea
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
+            onChange={(e) =>setValue(e.target.value) }
             placeholder="What's happening ?"
             className="w-full py-2 bg-transparent focus:outline-none resize-none"
             rows={1}
@@ -32,15 +39,8 @@ export default function CreatePost() {
             <label htmlFor="post-image">
               <ImageIcon color="#1A8CD8" />
             </label>
-            <input
-              type="file"
-              name="file"
-              id="post-image"
-              className="hidden"
-            />
-            <button type="submit" className="button" disabled={!value}>
-              Poster
-            </button>
+            <input type="file" name="file" id="post-image" className="hidden" />
+            <PostButton value={value} />
           </div>
         </form>
       </div>
