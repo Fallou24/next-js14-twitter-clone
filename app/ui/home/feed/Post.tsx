@@ -1,42 +1,55 @@
+"use client";
 import Image from "next/image";
-import React from "react";
 import PostActions from "./PostActions";
+import { Post } from "@prisma/client";
+import Link from "next/link";
 
-export default function Post() {
+export default function Post({ post }: { post:any }) {
+  
+  const likes = post._count.likes
+  const comment = post._count.reply
+  const {
+    id,
+    userImg,
+    userId,
+    username,
+    content,
+    createdAt,
+    postImg,
+    fullName,
+  } = post;
+
   return (
     <>
-      <article className="flex gap-2 items-top px-4 pt-2 mb-2">
-        <p>
+      <Link href={post.username+"/posts/"+post.id} className="flex items-start gap-2 px-4 pt-2 mb-2 ">
+        <p className="h-[45px] min-w-[45px] rounded-full overflow-hidden relative">
           <Image
-            src="/hero.png"
+            src={userImg}
             alt="Photo du auteur"
-            width={50}
-            height={50}
-            className="rounded-full object-cover"
+            fill
+            className="object-cover"
           />
         </p>
         <div className="w-full">
           <div className="flex gap-2 items-center">
-            <h3 className="font-bold">John Doe</h3>
-            <p className="text-[#6E767D] text-sm">@JohnDoe</p>
+            <h3 className="font-bold">{fullName}</h3>
+            <p className="text-[#6E767D] text-sm">@{username}</p>
             <p className="text-[#6E767D] text-sm">7m</p>
           </div>
-          <p className="font-normal mb-1">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque
-            recusandae delectus odio laudantium excepturi eaque.
-          </p>
-          <p className="mb-3 relative h-52">
-            <Image
-              src="/post-img.jpg"
-              alt="Image du post"
-              fill={true}
-            
-              className="rounded-3xl object-cover"
-            />
-          </p>
-          <PostActions />
+          <p className="font-normal mb-1">{content}</p>
+          {postImg && (
+            <p className="mb-3 relative h-52">
+              <Image
+                src={postImg}
+                alt="Image du post"
+                fill={true}
+                className="rounded-3xl object-cover"
+              />
+            </p>
+          )}
+          <PostActions likes={likes} comments={comment} />
         </div>
-      </article>
+      </Link>
       <hr className="border-border-color border-1" />
     </>
   );

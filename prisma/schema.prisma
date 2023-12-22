@@ -11,31 +11,24 @@ datasource db {
 }
 
 model Post {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
   userId    String
-  postImg     String?
+  postImg   String?
   content   String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   userImg   String
   username  String
-  fullName String
+  fullName  String
   likes     Like[]
-  comments  Comment[]
+  parentId  String?  @db.ObjectId
+  parent    Post?    @relation("postReplies", fields: [parentId], references: [id], onUpdate: NoAction, onDelete: NoAction)
+  reply     Post[]   @relation("postReplies")
 
   @@map("posts")
 }
 
 model Like {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  Post      Post     @relation(fields: [postId], references: [id])
-  postId    String   @db.ObjectId
-}
-
-model Comment {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   userId    String
   createdAt DateTime @default(now())

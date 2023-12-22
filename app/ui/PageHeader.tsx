@@ -9,7 +9,7 @@ export default function PageHeader({
   return (
     <div className="page_header flex justify-between items-center">
       <div>{children}</div>
-      <UserButton />
+      <UserButton  />
     </div>
   );
 }

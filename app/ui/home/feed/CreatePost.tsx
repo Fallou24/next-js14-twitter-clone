@@ -1,25 +1,26 @@
 "use client";
-import { createPost } from "@/app/lib/actions";
+import { commentPost, createPost } from "@/app/lib/actions";
 import { ImageIcon } from "lucide-react";
 import Image from "next/image";
 import { useRef, useState } from "react";
 import PostButton from "./PostButton";
+import { useUser } from "@clerk/nextjs";
 
 export default function CreatePost() {
+  const { user } = useUser();
   const [value, setValue] = useState("");
-  const inputRef = useRef<HTMLTextAreaElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   return (
     <div className="flex gap-2 items-top px-4 pt-2 mb-2">
-      <p>
+      <p className="h-[45px] min-w-[45px] rounded-full overflow-hidden relative">
         <Image
-          src="/hero.png"
+          src={user?.imageUrl || "/hero.png"}
           alt="Photo du auteur"
-          width={50}
-          height={50}
-          className="rounded-full object-cover"
+          fill
+          className="object-cover"
         />
       </p>
+
       <div className="w-full">
         <form
           ref={formRef}
@@ -29,7 +30,7 @@ export default function CreatePost() {
           }}
         >
           <textarea
-            onChange={(e) =>setValue(e.target.value) }
+            onChange={(e) => setValue(e.target.value)}
             placeholder="What's happening ?"
             className="w-full py-2 bg-transparent focus:outline-none resize-none"
             rows={1}

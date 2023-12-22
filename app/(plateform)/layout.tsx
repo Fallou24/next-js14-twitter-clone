@@ -12,7 +12,7 @@ export default function PlateformLayout({
       <div className="sticky top-4">
         <Sidebar />
       </div>
-      <div className="flex gap-2">
+      <div className="w-full flex gap-2">
         {children}
         <RightBar />
       </div>

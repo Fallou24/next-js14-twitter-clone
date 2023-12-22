@@ -2,8 +2,11 @@ import React from "react";
 import CreatePost from "./CreatePost";
 import Post from "./Post";
 import PageHeader from "../../PageHeader";
+import { getAllPost } from "@/app/lib/data";
 
-export default function Feed() {
+export default async function Feed() {
+  const posts = await getAllPost();
+
   return (
     <div className="page_content">
       <PageHeader>
@@ -12,10 +15,9 @@ export default function Feed() {
       <hr className="border-border-color border-1" />
       <CreatePost />
       <hr className="border-border-color border-1" />
-      <Post />
-      <Post />
-      <Post />
-      <Post />
+      {posts?.map((post) => {
+        return <Post post={post} key={post.id} />;
+      })}
     </div>
   );
 }
