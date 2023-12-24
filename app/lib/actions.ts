@@ -107,3 +107,43 @@ export async function commentPost(parentId: string, formData: FormData) {
     revalidatePath("/" + user.username + "/posts/" + parentId);
   }
 }
+
+export async function likePost(postId: string) {
+  const user = await currentUser();
+  if (!user) {
+    redirect("/sign-in");
+  }
+  const postStatus = await prisma.like.count({
+    where: {
+      postId,
+      userId: user.id,
+    },
+  });
+  if (postStatus === 0) {
+    try {
+      await prisma.like.create({
+        data: {
+          postId,
+          userId: user.id,
+        },
+      });
+    } catch (e) {
+      console.log(e);
+      throw new Error("Impossible d'aimer cet article");
+    }
+  } else {
+    try {
+      await prisma.like.deleteMany({
+        where: {
+          userId: user.id,
+          postId,
+        },
+      });
+    } catch (e) {
+      console.log(e);
+      throw new Error("Impossible d'aimer cet article");
+    }
+  }
+
+  revalidatePath("/");
+}

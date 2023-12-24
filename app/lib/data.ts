@@ -1,3 +1,4 @@
+import { auth, useUser } from "@clerk/nextjs";
 import prisma from "./db";
 export async function getAllPost() {
   try {
@@ -31,13 +32,12 @@ export async function getPostById(id: string) {
       },
       include: {
         reply: true,
-        
+
         _count: {
           select: {
             likes: true,
             reply: true,
           },
-          
         },
       },
     });
@@ -45,5 +45,21 @@ export async function getPostById(id: string) {
   } catch (e) {
     console.log(e);
     throw new Error("Impossible de recupérer l'article");
+  }
+}
+
+export async function postLikeByUser(postId: string) {
+  const {user} = auth();
+  try {
+    const result = await prisma.like.count({
+      where:{
+        userId:user?.id,
+        postId
+      }
+    })
+    return result
+  } catch (e) {
+    console.log(e);
+    
   }
 }
