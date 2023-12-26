@@ -1,10 +1,19 @@
+import { getUserLikes } from "@/app/lib/data";
 import Post from "@/app/ui/home/feed/Post";
 import React from "react";
 
-export default function page() {
+export default async function page({
+  params,
+}: {
+  params: { username: string };
+}) {
+  const posts = await getUserLikes(params.username);
+
   return (
-    <div>
-      <Post />
-    </div>
+    <>
+      {posts?.map((post) => {
+        return <Post post={post} key={post.id} />;
+      })}
+    </>
   );
 }

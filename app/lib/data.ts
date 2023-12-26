@@ -68,7 +68,7 @@ export async function getUserPost(username: string) {
     const posts = await prisma.post.findMany({
       where: {
         parent: null,
-        username
+        username,
       },
       orderBy: {
         createdAt: "desc",
@@ -83,6 +83,37 @@ export async function getUserPost(username: string) {
       },
     });
     return posts;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export async function getUserLikes(username: string) {
+  try {
+    const posts = await prisma.like.findMany({
+      where: {
+        username,
+      },
+      select: {
+        post: {
+          select: {
+            id: true,
+            userImg: true,
+            username: true,
+            postImg: true,
+            content: true,
+            fullName: true,
+            _count: {
+              select: {
+                reply: true,
+                likes: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    return posts.map((p) => p.post);
   } catch (e) {
     console.log(e);
   }
