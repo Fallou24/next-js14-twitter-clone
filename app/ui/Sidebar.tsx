@@ -1,14 +1,19 @@
 "use client";
 
+import { useUser } from "@clerk/nextjs";
 import clsx from "clsx";
 import { HomeIcon, MailIcon, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 import React from "react";
 
 export default function Sidebar() {
   const pathName = usePathname();
+  const { user } = useUser();
+  if (!user) {
+    redirect("/sign-in");
+  }
   const sidebarLinks = [
     {
       label: "Home",
@@ -25,8 +30,8 @@ export default function Sidebar() {
     {
       label: "Profile",
       icon: User,
-      href: "/profile",
-      active: pathName === "profile",
+      href: "/" + user.username,
+      active: pathName === "/" + user.username,
     },
   ];
   return (

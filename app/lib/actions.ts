@@ -116,7 +116,7 @@ export async function likePost(postId: string) {
   const postStatus = await prisma.like.count({
     where: {
       postId,
-      userId: user.id,
+      username: user.username!,
     },
   });
   if (postStatus === 0) {
@@ -124,7 +124,7 @@ export async function likePost(postId: string) {
       await prisma.like.create({
         data: {
           postId,
-          userId: user.id,
+          username: user.username!,
         },
       });
     } catch (e) {
@@ -135,7 +135,7 @@ export async function likePost(postId: string) {
     try {
       await prisma.like.deleteMany({
         where: {
-          userId: user.id,
+          username: user.username!,
           postId,
         },
       });

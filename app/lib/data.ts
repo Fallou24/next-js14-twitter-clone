@@ -49,17 +49,41 @@ export async function getPostById(id: string) {
 }
 
 export async function postLikeByUser(postId: string) {
-  const {user} = auth();
+  const { user } = auth();
   try {
     const result = await prisma.like.count({
-      where:{
-        userId:user?.id,
-        postId
-      }
-    })
-    return result
+      where: {
+        username: user?.id,
+        postId,
+      },
+    });
+    return result;
   } catch (e) {
     console.log(e);
-    
+  }
+}
+
+export async function getUserPost(username: string) {
+  try {
+    const posts = await prisma.post.findMany({
+      where: {
+        parent: null,
+        username
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      include: {
+        _count: {
+          select: {
+            reply: true,
+            likes: true,
+          },
+        },
+      },
+    });
+    return posts;
+  } catch (e) {
+    console.log(e);
   }
 }
