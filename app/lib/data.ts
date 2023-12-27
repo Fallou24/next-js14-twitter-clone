@@ -118,3 +118,16 @@ export async function getUserLikes(username: string) {
     console.log(e);
   }
 }
+
+export async function getUserPostCount(username: string) {
+  try {
+    const count = prisma.post.count({
+      where: {
+        username,
+      },
+    });
+    return count;
+  } catch (e) {
+    console.log(e);
+  }
+}
