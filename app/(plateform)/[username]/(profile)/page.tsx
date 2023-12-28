@@ -1,5 +1,5 @@
 import { getUserPost } from "@/app/lib/data";
-import Post from "@/app/ui/home/feed/Post";
+import Post from "@/app/ui/shared/Post";
 
 export default async function page({
   params,

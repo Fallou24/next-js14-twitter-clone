@@ -1,5 +1,5 @@
 import { getUserPostCount } from "@/app/lib/data";
-import PageHeader from "@/app/ui/PageHeader";
+import PageHeader from "@/app/ui/shared/PageHeader";
 import ProfileImages from "@/app/ui/profile/ProfileImages";
 import UserInfo from "@/app/ui/profile/UserInfo";
 import ProfileNavbar from "@/app/ui/profile/profilNavbar";

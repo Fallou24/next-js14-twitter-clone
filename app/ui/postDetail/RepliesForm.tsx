@@ -3,7 +3,7 @@ import { useUser } from "@clerk/nextjs";
 import { ImageIcon } from "lucide-react";
 import Image from "next/image";
 import { useRef, useState } from "react";
-import PostButton from "../home/feed/PostButton";
+import PostButton from "../shared/PostButton";
 import { commentPost } from "@/app/lib/actions";
 
 export default function RepliesForm({ parentId }: { parentId: string }) {

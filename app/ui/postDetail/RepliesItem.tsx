@@ -1,5 +1,5 @@
 import Image from "next/image";
-import PostActions from "../home/feed/PostActions";
+import PostActions from "../shared/PostActions";
 import { Post } from "@prisma/client";
 import Link from "next/link";
 

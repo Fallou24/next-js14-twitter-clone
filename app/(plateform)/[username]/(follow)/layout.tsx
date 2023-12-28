@@ -1,4 +1,4 @@
-import PageHeader from "@/app/ui/PageHeader";
+import PageHeader from "@/app/ui/shared/PageHeader";
 import FollowNavbar from "@/app/ui/profile/followNav";
 import React from "react";
 

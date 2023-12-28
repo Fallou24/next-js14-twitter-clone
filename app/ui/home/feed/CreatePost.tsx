@@ -3,7 +3,7 @@ import { commentPost, createPost } from "@/app/lib/actions";
 import { ImageIcon } from "lucide-react";
 import Image from "next/image";
 import { useRef, useState } from "react";
-import PostButton from "./PostButton";
+import PostButton from "../../shared/PostButton";
 import { useUser } from "@clerk/nextjs";
 
 export default function CreatePost() {

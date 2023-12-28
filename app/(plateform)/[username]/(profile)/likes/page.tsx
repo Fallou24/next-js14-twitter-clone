@@ -1,5 +1,5 @@
 import { getUserLikes } from "@/app/lib/data";
-import Post from "@/app/ui/home/feed/Post";
+import Post from "@/app/ui/shared/Post";
 import React from "react";
 
 export default async function page({

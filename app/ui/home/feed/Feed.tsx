@@ -1,7 +1,7 @@
 import React from "react";
 import CreatePost from "./CreatePost";
-import Post from "./Post";
-import PageHeader from "../../PageHeader";
+import Post from "../../shared/Post";
+import PageHeader from "../../shared/PageHeader";
 import { getAllPost, postLikeByUser } from "@/app/lib/data";
 
 export default async function Feed() {

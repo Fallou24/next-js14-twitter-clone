@@ -1,5 +1,5 @@
 import React from "react";
-import Sidebar from "../ui/Sidebar";
+import Sidebar from "../ui/shared/Sidebar";
 import RightBar from "../ui/home/rightBar/RightBar";
 
 export default function PlateformLayout({

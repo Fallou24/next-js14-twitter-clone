@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import PostActions from "../home/feed/PostActions";
+import PostActions from "../shared/PostActions";
 
 export default function PostWithAnswer() {
   return (
