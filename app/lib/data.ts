@@ -10,6 +10,7 @@ export async function getAllPost() {
         createdAt: "desc",
       },
       include: {
+        profile: true,
         _count: {
           select: {
             reply: true,
@@ -31,7 +32,12 @@ export async function getPostById(id: string) {
         id,
       },
       include: {
-        reply: true,
+        profile: true,
+        reply: {
+          include: {
+            profile: true,
+          },
+        },
 
         _count: {
           select: {
@@ -53,7 +59,7 @@ export async function postLikeByUser(postId: string) {
   try {
     const result = await prisma.like.count({
       where: {
-        username: user?.id,
+        profileId: user?.id,
         postId,
       },
     });
@@ -64,16 +70,22 @@ export async function postLikeByUser(postId: string) {
 }
 
 export async function getUserPost(username: string) {
+  const currentUser = await prisma.profile.findUnique({
+    where: {
+      username,
+    },
+  });
   try {
     const posts = await prisma.post.findMany({
       where: {
         parent: null,
-        username,
+        profileId: currentUser?.id,
       },
       orderBy: {
         createdAt: "desc",
       },
       include: {
+        profile: true,
         _count: {
           select: {
             reply: true,
@@ -89,20 +101,23 @@ export async function getUserPost(username: string) {
 }
 
 export async function getUserLikes(username: string) {
+  const currentUser = await prisma.profile.findUnique({
+    where: {
+      username,
+    },
+  });
   try {
     const posts = await prisma.like.findMany({
       where: {
-        username,
+        profileId: currentUser?.id,
       },
       select: {
+        profile: true,
         post: {
           select: {
             id: true,
-            userImg: true,
-            username: true,
             postImg: true,
             content: true,
-            fullName: true,
             _count: {
               select: {
                 reply: true,
@@ -113,17 +128,25 @@ export async function getUserLikes(username: string) {
         },
       },
     });
-    return posts.map((p) => p.post);
+    return posts.map((post) => ({
+      profile: post.profile,
+      ...post.post,
+    }));
   } catch (e) {
     console.log(e);
   }
 }
 
 export async function getUserPostCount(username: string) {
+  const currentUser = await prisma.profile.findUnique({
+    where: {
+      username,
+    },
+  });
   try {
     const count = prisma.post.count({
       where: {
-        username,
+        profileId: currentUser?.id,
       },
     });
     return count;

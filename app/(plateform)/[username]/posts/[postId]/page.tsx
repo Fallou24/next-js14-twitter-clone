@@ -2,7 +2,7 @@ import { getPostById } from "@/app/lib/data";
 import PageHeader from "@/app/ui/shared/PageHeader";
 import RepliesForm from "@/app/ui/postDetail/RepliesForm";
 import RepliesItem from "@/app/ui/postDetail/RepliesItem";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import Post from "@/app/ui/shared/Post";
 
 export default async function page({ params }: { params: { postId: string } }) {

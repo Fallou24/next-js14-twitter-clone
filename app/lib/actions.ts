@@ -40,10 +40,7 @@ export async function createPost(formData: FormData) {
   if (validData.success) {
     const postData = {
       ...validData.data,
-      userId: user.id,
-      username: user.username!,
-      fullName: user.firstName + " " + user.lastName,
-      userImg: user.imageUrl,
+      profileId: user.id,
     };
 
     try {
@@ -89,10 +86,7 @@ export async function commentPost(parentId: string, formData: FormData) {
   if (validData.success) {
     const postData = {
       ...validData.data,
-      userId: user.id,
-      username: user.username!,
-      fullName: user.firstName + " " + user.lastName,
-      userImg: user.imageUrl,
+      profileId: user.id,
       parentId,
     };
 
@@ -116,7 +110,7 @@ export async function likePost(postId: string) {
   const postStatus = await prisma.like.count({
     where: {
       postId,
-      username: user.username!,
+      profileId: user.id,
     },
   });
   if (postStatus === 0) {
@@ -124,7 +118,7 @@ export async function likePost(postId: string) {
       await prisma.like.create({
         data: {
           postId,
-          username: user.username!,
+          profileId: user.id,
         },
       });
     } catch (e) {
@@ -135,8 +129,8 @@ export async function likePost(postId: string) {
     try {
       await prisma.like.deleteMany({
         where: {
-          username: user.username!,
           postId,
+          profileId: user.id,
         },
       });
     } catch (e) {

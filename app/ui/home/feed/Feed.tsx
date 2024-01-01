@@ -6,6 +6,7 @@ import { getAllPost, postLikeByUser } from "@/app/lib/data";
 
 export default async function Feed() {
   const posts = await getAllPost();
+ console.log(posts);
  
   return (
     <div className="page_content">
