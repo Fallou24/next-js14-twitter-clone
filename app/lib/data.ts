@@ -137,19 +137,23 @@ export async function getUserLikes(username: string) {
   }
 }
 
-export async function getUserPostCount(username: string) {
-  const currentUser = await prisma.profile.findUnique({
-    where: {
-      username,
-    },
-  });
+export async function getProfileInfo(username: string) {
   try {
-    const count = prisma.post.count({
+    const currentUser = await prisma.profile.findUnique({
       where: {
-        profileId: currentUser?.id,
+        username,
+      },
+      include: {
+        _count: {
+          select: {
+            follower: true,
+            following: true,
+            post: true,
+          },
+        },
       },
     });
-    return count;
+    return currentUser;
   } catch (e) {
     console.log(e);
   }

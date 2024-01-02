@@ -17,16 +17,11 @@ export default function ProfileNavbar({ username }: { username: string }) {
       href: "/" + username + "/likes",
       active: pathName === "/" + username + "/likes",
     },
-    {
-      label: "Réponses",
-      href: "/" + username + "/replies",
-      active: pathName === "/" + username + "/replies",
-    },
   ];
   return (
     <>
       <div className="px-4 mt-2">
-        <nav className="flex justify-between">
+        <nav className="flex justify-between w-full md:w-1/2">
           {Links.map((link) => {
             return (
               <Link

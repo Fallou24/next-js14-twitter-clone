@@ -56,7 +56,7 @@ export async function POST(req: Request) {
       username: evt.data.username!,
       userImageUrl: evt.data.image_url,
       bio: evt.data.unsafe_metadata.bio as string,
-      coverImg: "",
+      coverImg: evt.data.unsafe_metadata.coverImg as string,
       fullName: evt.data.first_name + " " + evt.data.last_name,
     };
     await prisma.profile.upsert({
