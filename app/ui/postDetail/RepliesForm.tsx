@@ -10,7 +10,7 @@ export default function RepliesForm({ parentId }: { parentId: string }) {
   const { user } = useUser();
   const [value, setValue] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
-  const commentWithId = commentPost.bind(null,parentId)
+  const commentWithId = commentPost.bind(null, parentId);
   return (
     <div className="flex gap-2 items-top px-4 pt-2 mb-2">
       <p className="h-[45px] min-w-[45px] rounded-full overflow-hidden relative">
@@ -32,17 +32,13 @@ export default function RepliesForm({ parentId }: { parentId: string }) {
         >
           <textarea
             onChange={(e) => setValue(e.target.value)}
-            placeholder="What's happening ?"
+            placeholder="Laissez votre commentaire"
             className="w-full py-2 bg-transparent focus:outline-none resize-none"
             rows={1}
             name="content"
           ></textarea>
-          <div className="flex justify-between items-center">
-            <label htmlFor="post-image">
-              <ImageIcon color="#1A8CD8" />
-            </label>
-            <input type="file" name="file" id="post-image" className="hidden" />
-            <PostButton value={value} />
+          <div className="flex justify-end">
+            <PostButton text={value} />
           </div>
         </form>
       </div>

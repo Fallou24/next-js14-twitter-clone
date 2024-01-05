@@ -30,16 +30,6 @@ export default function RepliesItem({ reply }: { reply: replyPropsType }) {
             <p className="text-[#6E767D] text-sm">7m</p>
           </div>
           <p className="font-normal mb-1">{reply.content}</p>
-          {reply.postImg && (
-            <p className="mb-3 relative h-52">
-              <Image
-                src={reply.postImg}
-                alt="Image du post"
-                fill={true}
-                className="rounded-3xl object-cover"
-              />
-            </p>
-          )}
         </div>
       </Link>
       <hr className="border-border-color border-1" />

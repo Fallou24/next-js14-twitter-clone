@@ -8,7 +8,6 @@ export default async function page({
   params: { username: string };
 }) {
   const posts = await getUserLikes(params.username);
-  console.log(posts);
 
   return (
     <>

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
 import PostActions from "./PostActions";
+import Link from "next/link";
 
 export default function PostContent({
   post,
@@ -23,14 +24,14 @@ export default function PostContent({
       }
       className="flex items-start gap-2 px-4 pt-2 mb-2 cursor-pointer"
     >
-      <p className="h-[45px] min-w-[45px] rounded-full overflow-hidden relative">
+      <Link href={"/"+post.profile.username} onClick={(e)=>e.stopPropagation()} className="h-[45px] min-w-[45px] rounded-full overflow-hidden relative">
         <Image
           src={post.profile.userImageUrl}
           alt="Photo du auteur"
           fill
           className="object-cover"
         />
-      </p>
+      </Link>
       <div className="w-full">
         <div className="flex gap-2 items-center">
           <h3 className="font-bold">{post.profile.fullName}</h3>

@@ -1,8 +1,8 @@
-import { auth, useUser } from "@clerk/nextjs";
+import { auth, currentUser, useUser } from "@clerk/nextjs";
 import { unstable_noStore as noStore } from "next/cache";
 import prisma from "./db";
 export async function getAllPost() {
-  noStore()
+  noStore();
   try {
     const posts = await prisma.post.findMany({
       where: {
@@ -28,15 +28,20 @@ export async function getAllPost() {
 }
 
 export async function getPostById(id: string) {
-  noStore()
+  noStore();
   try {
     const post = await prisma.post.findUnique({
       where: {
         id,
       },
+
       include: {
         profile: true,
+
         reply: {
+          orderBy: {
+            createdAt: "desc",
+          },
           include: {
             profile: true,
           },
@@ -58,8 +63,8 @@ export async function getPostById(id: string) {
 }
 
 export async function postLikeByUser(postId: string) {
-  noStore()
-  const { user } = auth();
+  noStore();
+  const user = await currentUser();
   try {
     const result = await prisma.like.count({
       where: {
@@ -74,7 +79,7 @@ export async function postLikeByUser(postId: string) {
 }
 
 export async function getUserPost(username: string) {
-  noStore()
+  noStore();
   const currentUser = await prisma.profile.findUnique({
     where: {
       username,
@@ -106,7 +111,7 @@ export async function getUserPost(username: string) {
 }
 
 export async function getUserLikes(username: string) {
-  noStore()
+  noStore();
   const currentUser = await prisma.profile.findUnique({
     where: {
       username,
@@ -117,12 +122,14 @@ export async function getUserLikes(username: string) {
       where: {
         profileId: currentUser?.id,
       },
+      orderBy:{
+        createdAt:"desc"
+      },
       select: {
-        profile: true,
         post: {
           select: {
+            profile: true,
             id: true,
-            postImg: true,
             content: true,
             _count: {
               select: {
@@ -134,17 +141,14 @@ export async function getUserLikes(username: string) {
         },
       },
     });
-    return posts.map((post) => ({
-      profile: post.profile,
-      ...post.post,
-    }));
+    return posts.map((post) => post.post);
   } catch (e) {
     console.log(e);
   }
 }
 
 export async function getProfileInfo(username: string) {
-  noStore()
+  noStore();
   try {
     const currentUser = await prisma.profile.findUnique({
       where: {
