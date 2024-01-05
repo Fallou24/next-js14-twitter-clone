@@ -14,15 +14,13 @@ export default function PostContent({
 }) {
   const likes = post._count?.likes;
   const comment = post._count?.reply;
-  const {
-    id,
-    content,
-    postImg,
-  } = post;
+  const { id, content } = post;
   const router = useRouter();
   return (
     <article
-      onClick={() => router.push("/" + post.profile.username + "/posts/" + post.id)}
+      onClick={() =>
+        router.push("/" + post.profile.username + "/posts/" + post.id)
+      }
       className="flex items-start gap-2 px-4 pt-2 mb-2 cursor-pointer"
     >
       <p className="h-[45px] min-w-[45px] rounded-full overflow-hidden relative">
@@ -40,16 +38,6 @@ export default function PostContent({
           <p className="text-[#6E767D] text-sm">7m</p>
         </div>
         <p className="font-normal mb-1">{content}</p>
-        {postImg && (
-          <p className="mb-3 relative h-52">
-            <Image
-              src={postImg}
-              alt="Image du post"
-              fill={true}
-              className="rounded-3xl object-cover"
-            />
-          </p>
-        )}
         <PostActions
           isAlreadyLiked={isAlreadyLiked}
           likes={likes}

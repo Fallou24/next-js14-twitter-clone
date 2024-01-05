@@ -1,6 +1,8 @@
 import { auth, useUser } from "@clerk/nextjs";
+import { unstable_noStore as noStore } from "next/cache";
 import prisma from "./db";
 export async function getAllPost() {
+  noStore()
   try {
     const posts = await prisma.post.findMany({
       where: {
@@ -26,6 +28,7 @@ export async function getAllPost() {
 }
 
 export async function getPostById(id: string) {
+  noStore()
   try {
     const post = await prisma.post.findUnique({
       where: {
@@ -55,6 +58,7 @@ export async function getPostById(id: string) {
 }
 
 export async function postLikeByUser(postId: string) {
+  noStore()
   const { user } = auth();
   try {
     const result = await prisma.like.count({
@@ -70,6 +74,7 @@ export async function postLikeByUser(postId: string) {
 }
 
 export async function getUserPost(username: string) {
+  noStore()
   const currentUser = await prisma.profile.findUnique({
     where: {
       username,
@@ -101,6 +106,7 @@ export async function getUserPost(username: string) {
 }
 
 export async function getUserLikes(username: string) {
+  noStore()
   const currentUser = await prisma.profile.findUnique({
     where: {
       username,
@@ -138,6 +144,7 @@ export async function getUserLikes(username: string) {
 }
 
 export async function getProfileInfo(username: string) {
+  noStore()
   try {
     const currentUser = await prisma.profile.findUnique({
       where: {

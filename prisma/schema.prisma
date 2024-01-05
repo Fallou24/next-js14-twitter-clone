@@ -29,7 +29,6 @@ model Profile {
 
 model Post {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  postImg   String?
   content   String
   likes     Like[]
   parentId  String?  @db.ObjectId
