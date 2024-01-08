@@ -14,11 +14,12 @@ export default async function layout({
   params: { username: string };
 }) {
   const userInfo = await getProfileInfo(params.username);
+
   const images = {
     userImg: userInfo?.userImageUrl,
     coverImg: userInfo?.coverImg,
   };
-  const id = userInfo?.id
+  const id = userInfo?.id;
   return (
     <>
       <div className="page_content">
@@ -29,8 +30,11 @@ export default async function layout({
           </p>
         </PageHeader>
         <ProfileImages images={images} />
-        <ProfileButtons id={id!} />
-        <UserInfo userInfo={userInfo}/>
+        <div className="relative">
+          <ProfileButtons id={id!} />
+        </div>
+
+        <UserInfo userInfo={userInfo} />
         <ProfileNavbar username={params.username} />
         {children}
       </div>

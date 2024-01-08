@@ -11,18 +11,18 @@ datasource db {
 }
 
 model Profile {
-  id           String      @id @map("_id")
+  id           String    @id @map("_id")
   userImageUrl String
-  username     String      @unique
+  username     String    @unique
   fullName     String
   bio          String?
   coverImg     String?
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
   post         Post[]
-  follower     Follower[]
-  following    Following[]
   Like         Like[]
+  follower     Follows[] @relation("followedBy")
+  following    Follows[] @relation("following")
 
   @@map("profile")
 }
@@ -54,24 +54,14 @@ model Like {
   @@map("likes")
 }
 
-model Follower {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  followerId String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  profile    Profile? @relation(fields: [profileId], references: [id])
-  profileId  String?
-
-  @@map("follower")
-}
-
-model Following {
+model Follows {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  followerId  String
   followingId String
+  following   Profile  @relation("following", fields: [followingId], references: [id])
+  follower    Profile  @relation("followedBy", fields: [followerId], references: [id])
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  profile     Profile? @relation(fields: [profileId], references: [id])
-  profileId   String?
 
-  @@map("following")
+  @@map("follow")
 }

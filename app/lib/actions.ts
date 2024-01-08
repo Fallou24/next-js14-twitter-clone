@@ -102,3 +102,34 @@ export async function likePost(postId: string) {
     }
   }
 }
+
+export async function followUser(id: string) {
+  const user = await currentUser();
+  const res = await prisma.follows.findMany({
+    where: {
+      followerId: user?.id!,
+      followingId: id,
+    },
+  });
+  if (res.length >= 1) {
+    await prisma.follows.deleteMany({
+      where: {
+        followerId: user?.id!,
+        followingId: id,
+      },
+    });
+  } else {
+    try {
+      await prisma.follows.create({
+        data: {
+          followerId: user?.id!,
+          followingId: id,
+        },
+      });
+    } catch (e) {
+      console.log(e);
+      throw new Error("Impossible de suivre ce profile");
+    }
+  }
+  revalidatePath("/")
+}

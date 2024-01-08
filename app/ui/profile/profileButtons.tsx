@@ -1,31 +1,29 @@
-"use client";
-import { useState } from "react";
-import Modal from "../shared/Modal";
-import { useUser } from "@clerk/nextjs";
+import { followUser } from "@/app/lib/actions";
+import { isFollowed } from "@/app/lib/data";
+import { currentUser, useUser } from "@clerk/nextjs";
+import clsx from "clsx";
 
-export default function ProfileButtons({ id }: { id: string }) {
-  const [open, setOpen] = useState(false);
-  const { user } = useUser();
-  function onCloseModal() {
-    setOpen(false);
-  }
+export default async function ProfileButtons({ id }: { id: string }) {
+  const user = await currentUser();
+
+  const followWithId = followUser.bind(null, id);
+
+  const isUserFollowed = await isFollowed(id);
+
   return (
-    <>
-      <div className="flex justify-end gap-2 m-4">
-        {id !== user?.id ? (
-          <button className="bg-white text-black rounded-3xl px-6 p-1">
-            Suivre
-          </button>
-        ) : (
+    <div className="absolute top-4 right-4">
+      {id !== user?.id && (
+        <form action={followWithId}>
           <button
-            onClick={() => setOpen(true)}
-            className="border border-white rounded-3xl px-6 p-1"
+            className={clsx("text-black rounded-3xl px-6 p-1", {
+              "bg-transparent border border-white text-white": isUserFollowed,
+              "bg-white": !isUserFollowed,
+            })}
           >
-            Editer le profil
+            {isUserFollowed ? "Abonné" : "Suivre"}
           </button>
-        )}
-      </div>
-      <Modal open={open} onClose={onCloseModal} />
-    </>
+        </form>
+      )}
+    </div>
   );
 }

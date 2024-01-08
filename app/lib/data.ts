@@ -122,8 +122,8 @@ export async function getUserLikes(username: string) {
       where: {
         profileId: currentUser?.id,
       },
-      orderBy:{
-        createdAt:"desc"
+      orderBy: {
+        createdAt: "desc",
       },
       select: {
         post: {
@@ -165,6 +165,22 @@ export async function getProfileInfo(username: string) {
       },
     });
     return currentUser;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export async function isFollowed(id: string) {
+  const user = await currentUser();
+  try {
+    const res = await prisma.follows.findMany({
+      where: {
+        followerId: user?.id,
+        followingId: id,
+      },
+    });
+    return !!res.length
+    
   } catch (e) {
     console.log(e);
   }
