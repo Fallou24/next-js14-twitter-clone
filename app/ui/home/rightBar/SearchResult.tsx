@@ -22,7 +22,7 @@ export default function SearchResult() {
   }
   useEffect(() => {
     getSearchResult();
-  }, [query]);
+  }, [query, getSearchResult]);
   if (!query) {
     return null;
   }
@@ -44,6 +44,7 @@ export default function SearchResult() {
             <Link
               href={"/" + user.username}
               className="flex gap-2 items-center my-2 mb-4"
+              key={user.id}
             >
               <p className="relative h-[45px] w-[45px] rounded-full overflow-hidden">
                 <Image
