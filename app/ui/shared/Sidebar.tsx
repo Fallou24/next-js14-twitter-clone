@@ -21,12 +21,7 @@ export default function Sidebar() {
       href: "/",
       active: pathName === "/",
     },
-    {
-      label: "Notifications",
-      icon: MailIcon,
-      href: "/notifications",
-      active: pathName === "/notifications",
-    },
+
     {
       label: "Profile",
       icon: User,

@@ -2,7 +2,11 @@
 import { Search } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-export default function SearchForm() {
+export default function SearchForm({
+  showResults,
+}: {
+  showResults: () => void;
+}) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -28,7 +32,10 @@ export default function SearchForm() {
       <input
         type="text"
         id="search"
-        onChange={(e) => handleSearch(e.target.value)}
+        onChange={(e) => {
+          handleSearch(e.target.value);
+        }}
+        onFocus={() => showResults()}
         defaultValue={searchParams.get("query")?.toString()}
         placeholder="Rechercher un utilisateur"
         className="bg-transparent p-2 focus:outline-none w-full"

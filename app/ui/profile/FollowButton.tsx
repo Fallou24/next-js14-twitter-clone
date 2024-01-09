@@ -3,7 +3,7 @@ import { isFollowed } from "@/app/lib/data";
 import { currentUser, useUser } from "@clerk/nextjs";
 import clsx from "clsx";
 
-export default async function ProfileButtons({ id }: { id: string }) {
+export default async function FollowButton({ id }: { id: string }) {
   const user = await currentUser();
 
   const followWithId = followUser.bind(null, id);
@@ -11,7 +11,7 @@ export default async function ProfileButtons({ id }: { id: string }) {
   const isUserFollowed = await isFollowed(id);
 
   return (
-    <div className="absolute top-4 right-4">
+    <div>
       {id !== user?.id && (
         <form action={followWithId}>
           <button

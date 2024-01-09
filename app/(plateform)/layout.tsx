@@ -1,12 +1,15 @@
 import React from "react";
 import Sidebar from "../ui/shared/Sidebar";
 import RightBar from "../ui/home/rightBar/RightBar";
+import { getUserToSuggest } from "../lib/data";
 
-export default function PlateformLayout({
+export default async function PlateformLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const userToSuggest = await getUserToSuggest();
+
   return (
     <div className="flex max-w-6xl mx-auto">
       <div className="sticky top-4">
@@ -14,7 +17,7 @@ export default function PlateformLayout({
       </div>
       <div className="w-full flex gap-2">
         {children}
-        <RightBar />
+        <RightBar userToSuggest={userToSuggest} />
       </div>
     </div>
   );

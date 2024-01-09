@@ -1,6 +1,7 @@
 import { auth, currentUser, useUser } from "@clerk/nextjs";
 import { unstable_noStore as noStore } from "next/cache";
 import prisma from "./db";
+import { redirect } from "next/navigation";
 export async function getAllPost() {
   noStore();
   try {
@@ -203,5 +204,46 @@ export async function getSearchResult(query: string) {
   } catch (e) {
     console.log(e);
     throw new Error("Impossible de recupérer le resultat des recherches");
+  }
+}
+
+export async function getUserToSuggest() {
+  noStore();
+  const user = await currentUser();
+  if (!user) {
+    redirect("/sign-in");
+  }
+  const userInfo = await prisma.profile.findUnique({
+    where: {
+      id: user?.id,
+    },
+    include: {
+      follower: true,
+    },
+  });
+
+  const followedUserIds = userInfo?.follower.map(
+    (follower) => follower.followingId
+  );
+  const ids = followedUserIds ? [user.id, ...followedUserIds] : [user.id];
+
+  try {
+    const data = await prisma.profile.findMany({
+      where: {
+        id: {
+          notIn: ids,
+        },
+      },
+      orderBy: {
+        following: {
+          _count: "desc",
+        },
+      },
+      take: 3,
+    });
+    return data;
+  } catch (e) {
+    console.log(e);
+    throw new Error("Impossible de recupérer les utilisateurs");
   }
 }

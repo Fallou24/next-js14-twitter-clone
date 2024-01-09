@@ -2,9 +2,9 @@ import PageHeader from "@/app/ui/shared/PageHeader";
 import ProfileImages from "@/app/ui/profile/ProfileImages";
 import UserInfo from "@/app/ui/profile/UserInfo";
 import ProfileNavbar from "@/app/ui/profile/profilNavbar";
-import ProfileButtons from "@/app/ui/profile/profileButtons";
 import React from "react";
 import { getProfileInfo } from "@/app/lib/data";
+import FollowButton from "@/app/ui/profile/FollowButton";
 
 export default async function layout({
   children,
@@ -31,7 +31,7 @@ export default async function layout({
         </PageHeader>
         <ProfileImages images={images} />
         <div className="relative">
-          <ProfileButtons id={id!} />
+          <FollowButton id={id!} />
         </div>
 
         <UserInfo userInfo={userInfo} />
