@@ -179,9 +179,29 @@ export async function isFollowed(id: string) {
         followingId: id,
       },
     });
-    return !!res.length
-    
+    return !!res.length;
   } catch (e) {
     console.log(e);
+  }
+}
+
+export async function getSearchResult(query: string) {
+  try {
+    const data = await prisma.profile.findMany({
+      where: {
+        fullName: {
+          contains: query,
+          mode: "insensitive",
+        },
+        username: {
+          contains: query,
+          mode: "insensitive",
+        },
+      },
+    });
+    return data;
+  } catch (e) {
+    console.log(e);
+    throw new Error("Impossible de recupérer le resultat des recherches");
   }
 }
