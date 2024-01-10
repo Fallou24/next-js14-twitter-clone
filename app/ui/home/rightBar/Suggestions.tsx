@@ -2,6 +2,7 @@ import { Profile } from "@prisma/client";
 import Image from "next/image";
 import React from "react";
 import FollowButton from "../../profile/FollowButton";
+import Link from "next/link";
 
 export default function Suggestions({
   userToSuggest,
@@ -12,7 +13,11 @@ export default function Suggestions({
     <div className="bg-border-color rounded-xl p-2 mt-4">
       <h2 className="font-bold text-lg mb-1">Suggestions</h2>
       {userToSuggest.map((user) => (
-        <div className="flex justify-between items-center " key={user.id}>
+        <Link
+          href={"/" + user.username}
+          className="flex justify-between items-center "
+          key={user.id}
+        >
           <div className="flex gap-2 items-center  my-2">
             <p className="w-[45px] h-[45px] relative overflow-hidden rounded-full">
               <Image
@@ -30,7 +35,7 @@ export default function Suggestions({
             </div>
           </div>
           <FollowButton id={user.id} />
-        </div>
+        </Link>
       ))}
     </div>
   );

@@ -31,7 +31,9 @@ export default async function layout({
         </PageHeader>
         <ProfileImages images={images} />
         <div className="relative">
-          <FollowButton id={id!} />
+          <div className="absolute right-4 top-4">
+            <FollowButton id={id!} />
+          </div>
         </div>
 
         <UserInfo userInfo={userInfo} />

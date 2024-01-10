@@ -172,6 +172,7 @@ export async function getProfileInfo(username: string) {
 }
 
 export async function isFollowed(id: string) {
+  noStore();
   const user = await currentUser();
   try {
     const res = await prisma.follows.findMany({
@@ -245,5 +246,45 @@ export async function getUserToSuggest() {
   } catch (e) {
     console.log(e);
     throw new Error("Impossible de recupérer les utilisateurs");
+  }
+}
+
+export async function getUserFollowers(username: string) {
+  const user = await prisma.profile.findUnique({
+    where: { username },
+    select: { id: true },
+  });
+  try {
+    const data = await prisma.follows.findMany({
+      where: {
+        followingId: user?.id,
+      },
+      select: {
+        follower: true,
+      },
+    });
+    return data.map((user) => user.follower);
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export async function getUserFollowings(username: string) {
+  const user = await prisma.profile.findUnique({
+    where: { username },
+    select: { id: true },
+  });
+  try {
+    const data = await prisma.follows.findMany({
+      where: {
+        followerId: user?.id,
+      },
+      select: {
+        following: true,
+      },
+    });
+    return data.map((user) => user.following);
+  } catch (e) {
+    console.log(e);
   }
 }

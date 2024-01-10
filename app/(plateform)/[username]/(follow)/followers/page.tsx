@@ -1,14 +1,18 @@
-import FollowerList from "@/app/ui/profile/FollowerList";
-import React from "react";
+import { getUserFollowers } from "@/app/lib/data";
+import FollowerItem from "@/app/ui/profile/FollowerItem";
 
-export default function page() {
+export default async function page({
+  params,
+}: {
+  params: { username: string };
+}) {
+  const users = await getUserFollowers(params.username);
+
   return (
     <div className="px-4">
-      <FollowerList />
-      <FollowerList />
-      <FollowerList />
-      <FollowerList />
-      <FollowerList />
+      {users?.map((user) => (
+        <FollowerItem user={user} key={user.id} />
+      ))}
     </div>
   );
 }
