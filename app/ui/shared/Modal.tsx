@@ -1,4 +1,6 @@
 import React, { useEffect, useRef } from "react";
+import CreatePost from "../home/feed/CreatePost";
+import ModalCreatePost from "./ModalCreatePost";
 
 export default function Modal({
   open,
@@ -27,13 +29,10 @@ export default function Modal({
     return null;
   }
   return (
-    <div className="fixed top-0 left-0 h-screen w-full bg-white z-50 bg-opacity-10">
-      <div className="flex justify-center items-center h-full">
-        <div ref={modalRef} className="bg-black w-max z-50 p-4 rounded-md">
-          <h3>Editer le profile</h3>
-          <form action="">
-            <textarea name="" id="" placeholder="Bio"></textarea>
-          </form>
+    <div className="fixed top-0 left-0 h-screen w-full bg-blue-color z-50 bg-opacity-5">
+      <div className=" flex justify-center items-start  h-full">
+        <div ref={modalRef} className="bg-black w-1/2 mt-12 z-50 p-4 rounded-3xl">
+          <ModalCreatePost onClose={onClose} />
         </div>
       </div>
     </div>
