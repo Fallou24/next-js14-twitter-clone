@@ -9,20 +9,21 @@ export default function SearchResult() {
   const searchParams = useSearchParams();
   const query = searchParams.get("query")?.toString();
   const [users, setUsers] = useState<Profile[]>([]);
-  function getSearchResult() {
-    try {
-      fetch("http://localhost:3000/api/search?query=" + query)
-        .then((res) => res.json())
-        .then((data) => {
-          setUsers(data?.data);
-        });
-    } catch (e) {
-      console.log(e);
-    }
-  }
+
   useEffect(() => {
+    function getSearchResult() {
+      try {
+        fetch("http://localhost:3000/api/search?query=" + query)
+          .then((res) => res.json())
+          .then((data) => {
+            setUsers(data?.data);
+          });
+      } catch (e) {
+        console.log(e);
+      }
+    }
     getSearchResult();
-  }, [query, getSearchResult]);
+  }, [query]);
   if (!query) {
     return null;
   }
