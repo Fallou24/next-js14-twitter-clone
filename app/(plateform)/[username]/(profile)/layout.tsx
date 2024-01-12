@@ -15,6 +15,7 @@ export default async function layout({
 }) {
   const userInfo = await getProfileInfo(params.username);
 
+
   const images = {
     userImg: userInfo?.userImageUrl,
     coverImg: userInfo?.coverImg,

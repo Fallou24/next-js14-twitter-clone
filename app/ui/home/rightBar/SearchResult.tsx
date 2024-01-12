@@ -13,7 +13,7 @@ export default function SearchResult() {
   useEffect(() => {
     function getSearchResult() {
       try {
-        fetch(process.env.SEARCH_API_KEY + "?query=" + query)
+        fetch(process.env.BASE_URL + "/api/search?query=" + query)
           .then((res) => res.json())
           .then((data) => {
             setUsers(data?.data);
