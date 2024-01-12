@@ -8,6 +8,7 @@ import Post from "@/app/ui/shared/Post";
 export default async function page({ params }: { params: { postId: string } }) {
   const postId = params.postId;
   const post = await getPostById(postId);
+
   const replies = post?.reply;
 
   if (!post) {
