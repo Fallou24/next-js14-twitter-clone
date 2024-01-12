@@ -12,7 +12,7 @@ export default function CreatePost() {
 
   return (
     <div className="flex gap-2 items-top px-4 pt-2 mb-2">
-      <p className="h-[45px] min-w-[45px] rounded-full overflow-hidden relative">
+      <p className="h-[40px] min-w-[40px] rounded-full overflow-hidden relative">
         <Image
           src={user?.imageUrl || "/hero.png"}
           alt="Photo du auteur"
@@ -33,8 +33,8 @@ export default function CreatePost() {
             onChange={(e) => setValue(e.target.value)}
             placeholder="What's happening ?"
             className="w-full py-2 bg-transparent focus:outline-none resize-none"
-            rows={1}
             name="content"
+           
             minLength={1}
           ></textarea>
           <div className="flex justify-end">

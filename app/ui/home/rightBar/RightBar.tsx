@@ -8,7 +8,7 @@ export default function RightBar({
   userToSuggest: Profile[];
 }) {
   return (
-    <div className="w-2/5 px-2 pt-4 hidden lg:block -z-10">
+    <div className="w-2/5 px-2 pt-4 hidden lg:block">
       <div className="sticky top-4">
         <Search />
         <Suggestions userToSuggest={userToSuggest} />

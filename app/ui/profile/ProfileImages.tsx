@@ -9,7 +9,7 @@ export default function ProfileImages({
   };
 }) {
   return (
-    <div className="relative h-56 bg-gray-700">
+    <div className="relative  md:h-56 h-36 bg-gray-700">
       {images.coverImg && (
         <Image
           src="/post-img.jpg"
@@ -18,7 +18,7 @@ export default function ProfileImages({
           className="object-cover"
         />
       )}
-      <p className="absolute left-5 -bottom-[65px] border-4  border-black rounded-full w-[130px] h-[130px] overflow-hidden">
+      <p className="absolute left-5 md:-bottom-[65px] -bottom-[40px] border-4  border-black rounded-full md:w-[130px] md:h-[130px]  w-[80px] h-[80px] overflow-hidden">
         {images.userImg ? (
           <Image
             src={images.userImg}

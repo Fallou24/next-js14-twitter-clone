@@ -1,5 +1,5 @@
-import { UserButton } from "@clerk/nextjs";
 import React from "react";
+import Search from "../home/rightBar/Search";
 
 export default function PageHeader({
   children,
@@ -9,7 +9,9 @@ export default function PageHeader({
   return (
     <div className="page_header flex justify-between items-center">
       <div>{children}</div>
-      <UserButton  />
+      <div className="block lg:hidden w-1/2">
+        <Search />
+      </div>
     </div>
   );
 }

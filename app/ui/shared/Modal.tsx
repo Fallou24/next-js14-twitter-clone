@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import CreatePost from "../home/feed/CreatePost";
 import ModalCreatePost from "./ModalCreatePost";
+import { createPortal } from "react-dom";
 
 export default function Modal({
   open,
@@ -28,13 +29,14 @@ export default function Modal({
   if (!open) {
     return null;
   }
-  return (
-    <div className="fixed top-0 left-0 h-screen w-full bg-blue-color z-50 bg-opacity-5">
-      <div className=" flex justify-center items-start  h-full">
-        <div ref={modalRef} className="bg-black w-1/2 mt-12 z-50 p-4 rounded-3xl">
+  return createPortal(
+    <div className="fixed top-0 left-0 h-screen w-full  z-50 bg-blue-color  bg-opacity-5">
+      <div className=" flex justify-center items-start   h-full">
+        <div ref={modalRef} className="bg-black md:w-1/2 w-4/5  mt-12  p-4 rounded-3xl">
           <ModalCreatePost onClose={onClose} />
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

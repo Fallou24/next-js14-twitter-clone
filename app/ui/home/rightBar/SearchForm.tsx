@@ -24,7 +24,7 @@ export default function SearchForm({
   return (
     <form
       action=""
-      className="bg-border-color flex rounded-3xl items-center gap-2 px-2"
+      className="bg-border-color  flex rounded-3xl items-center gap-2 px-2"
     >
       <label htmlFor="search">
         <Search color="#6E767D" />

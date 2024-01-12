@@ -65,6 +65,7 @@ export default function Sidebar() {
           <Feather />
           <span className="font-medium hidden md:block">Tweet</span>
         </button>
+        
       </div>
       <Modal open={open} onClose={onClose} />
     </>

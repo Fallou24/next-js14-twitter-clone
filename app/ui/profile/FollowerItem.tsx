@@ -7,7 +7,7 @@ export default function FollowerItem({ user }: { user: Profile }) {
   return (
     <div className="flex justify-between items-center">
       <div className="flex gap-2 items-center  my-2">
-        <p className="w-[45px] h-[45px] relative overflow-hidden rounded-full">
+        <p className="w-[40px] h-[40px] relative overflow-hidden rounded-full">
           <Image
             src={user.userImageUrl}
             alt="Photo du auteur"

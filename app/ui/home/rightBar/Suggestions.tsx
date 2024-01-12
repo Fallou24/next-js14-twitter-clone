@@ -10,7 +10,7 @@ export default function Suggestions({
   userToSuggest: Profile[];
 }) {
   return (
-    <div className="bg-border-color rounded-xl p-2 mt-4">
+    <div className="bg-border-color  rounded-xl p-2 mt-4">
       <h2 className="font-bold text-lg mb-1">Suggestions</h2>
       {userToSuggest.map((user) => (
         <Link
@@ -19,7 +19,7 @@ export default function Suggestions({
           key={user.id}
         >
           <div className="flex gap-2 items-center  my-2">
-            <p className="w-[45px] h-[45px] relative overflow-hidden rounded-full">
+            <p className="w-[40px] h-[40px] relative overflow-hidden rounded-full">
               <Image
                 src={user.userImageUrl}
                 alt="Photo du auteur"
