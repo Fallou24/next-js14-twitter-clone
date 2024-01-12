@@ -8,12 +8,12 @@ import React, { useEffect, useState } from "react";
 export default function SearchResult() {
   const searchParams = useSearchParams();
   const query = searchParams.get("query")?.toString();
-  const [users, setUsers] = useState<Profile[]>([]);
+  const [users, setUsers] = useState<Profile[] | []>([]);
 
   useEffect(() => {
     function getSearchResult() {
       try {
-        fetch("http://localhost:3000/api/search?query=" + query)
+        fetch(process.env.SEARCH_API_KEY + "?query=" + query)
           .then((res) => res.json())
           .then((data) => {
             setUsers(data?.data);
