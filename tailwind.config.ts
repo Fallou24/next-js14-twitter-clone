@@ -7,6 +7,15 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    fontSize: {
+      sm: "0.925rem",
+      base: "1rem",
+      xl: "1.25rem",
+      "2xl": "1.563rem",
+      "3xl": "1.953rem",
+      "4xl": "2.441rem",
+      "5xl": "3.052rem",
+    },
     extend: {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -16,7 +25,7 @@ const config: Config = {
       colors: {
         "border-color": "#2F3336",
         "blue-color": "#1A8CD8",
-        "gray-color":"#6E767D",
+        "gray-color": "#6E767D",
       },
     },
   },

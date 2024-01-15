@@ -2,7 +2,6 @@ import React from "react";
 import Sidebar from "../ui/shared/Sidebar";
 import RightBar from "../ui/home/rightBar/RightBar";
 import { getUserToSuggest } from "../lib/data";
-import { UserButton } from "@clerk/nextjs";
 
 export default async function PlateformLayout({
   children,
@@ -12,15 +11,11 @@ export default async function PlateformLayout({
   const userToSuggest = await getUserToSuggest();
 
   return (
-    <div className="flex max-w-6xl mx-auto ">
-      <div className="sticky top-0 max-h-screen flex flex-col justify-between">
+    <div className="flex max-w-2xl lg:max-w-5xl  mx-auto md:gap-4 gap-0">
+      <div className="sticky px-3 top-0 max-h-screen">
         <Sidebar />
-        <div className="p-4 ">
-          <UserButton afterSignOutUrl="/sign-in"  />
-        </div>
-       
       </div>
-      <div className="w-full flex gap-2">
+      <div className="w-full flex gap-4 text-sm md:text-base">
         {children}
         <RightBar userToSuggest={userToSuggest} />
       </div>

@@ -6,7 +6,7 @@ import { getAllPost, postLikeByUser } from "@/app/lib/data";
 
 export default async function Feed() {
   const posts = await getAllPost();
- 
+
   return (
     <div className="page_content">
       <PageHeader>
@@ -16,7 +16,7 @@ export default async function Feed() {
       <CreatePost />
       <hr className="border-border-color border-1" />
       {posts?.map((post) => {
-        return <Post post={post} key={post.id}  />;
+        return <Post post={post} key={post.id} />;
       })}
     </div>
   );
