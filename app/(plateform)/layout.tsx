@@ -16,7 +16,7 @@ export default async function PlateformLayout({
       <div className="sticky top-0 max-h-screen flex flex-col justify-between">
         <Sidebar />
         <div className="p-4 ">
-          <UserButton  />
+          <UserButton afterSignOutUrl="/sign-in"  />
         </div>
        
       </div>

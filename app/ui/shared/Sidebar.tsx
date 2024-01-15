@@ -37,7 +37,7 @@ export default function Sidebar() {
   return (
     <>
       <div className="p-2 md:p-4 flex gap-5 flex-col items-center md:items-start sticky top-4">
-        <Link href="">
+        <Link href="/">
           <Image src="/logo-white.png" alt="logo de X" width={30} height={30} />
         </Link>
         {sidebarLinks.map((link) => {
