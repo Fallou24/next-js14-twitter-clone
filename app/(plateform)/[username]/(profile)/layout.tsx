@@ -4,7 +4,7 @@ import UserInfo from "@/app/ui/profile/UserInfo";
 import ProfileNavbar from "@/app/ui/profile/profilNavbar";
 import React from "react";
 import { getProfileInfo } from "@/app/lib/data";
-import FollowButton from "@/app/ui/profile/FollowButton";
+import FollowButton from "@/app/ui/shared/FollowButton";
 
 export default async function layout({
   children,

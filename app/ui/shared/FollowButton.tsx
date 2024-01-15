@@ -1,7 +1,7 @@
 import { followUser } from "@/app/lib/actions";
 import { isFollowed } from "@/app/lib/data";
-import { currentUser, useUser } from "@clerk/nextjs";
-import clsx from "clsx";
+import { currentUser } from "@clerk/nextjs";
+import SugessionButton from "./SugessionButton";
 
 export default async function FollowButton({ id }: { id: string }) {
   const user = await currentUser();
@@ -14,14 +14,7 @@ export default async function FollowButton({ id }: { id: string }) {
     <div>
       {id !== user?.id && (
         <form action={followWithId}>
-          <button
-            className={clsx("text-black rounded-3xl px-6 p-1", {
-              "bg-transparent border border-white text-white": isUserFollowed,
-              "bg-white": !isUserFollowed,
-            })}
-          >
-            {isUserFollowed ? "Abonné" : "Suivre"}
-          </button>
+          <SugessionButton isUserFollowed={isUserFollowed!} />
         </form>
       )}
     </div>

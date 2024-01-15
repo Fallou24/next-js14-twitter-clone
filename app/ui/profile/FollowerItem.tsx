@@ -1,7 +1,7 @@
 import { Profile } from "@prisma/client";
 import Image from "next/image";
 import React from "react";
-import FollowButton from "./FollowButton";
+import FollowButton from "../shared/FollowButton";
 
 export default function FollowerItem({ user }: { user: Profile }) {
   return (

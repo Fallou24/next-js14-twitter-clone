@@ -209,7 +209,6 @@ export async function getSearchResult(query: string) {
 }
 
 export async function getUserToSuggest() {
-  noStore();
   const user = await currentUser();
   if (!user) {
     redirect("/sign-in");

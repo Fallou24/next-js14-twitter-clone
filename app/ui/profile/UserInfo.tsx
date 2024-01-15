@@ -3,9 +3,9 @@ import React from "react";
 
 export default function UserInfo({ userInfo }: { userInfo: any }) {
   return (
-    <div className="px-4 mt-16">
-      <h3 className="font-bold text-2xl">{userInfo.fullName}</h3>
-      <p className="text-gray-color mb-4">@{userInfo.username}</p>
+    <div className="px-4 mt-12 md:mt-16">
+      <h3 className="font-bold text-xl md:text-2xl">{userInfo.fullName}</h3>
+      <p className="text-gray-color mb-2">@{userInfo.username}</p>
       {userInfo.bio && <p className="mb-1">{userInfo.bio}</p>}
       <div className="flex gap-2">
         <Link

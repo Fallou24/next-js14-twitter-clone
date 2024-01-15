@@ -1,8 +1,8 @@
 import { Profile } from "@prisma/client";
 import Image from "next/image";
 import React from "react";
-import FollowButton from "../../profile/FollowButton";
 import Link from "next/link";
+import FollowButton from "../../shared/FollowButton";
 
 export default function Suggestions({
   userToSuggest,
