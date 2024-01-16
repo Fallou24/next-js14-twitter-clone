@@ -1,5 +1,10 @@
 import { getUserPost } from "@/app/lib/data";
 import Post from "@/app/ui/shared/Post";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Profile',
+};
 
 export default async function page({
   params,

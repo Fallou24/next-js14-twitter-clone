@@ -8,6 +8,7 @@ export default async function PlateformLayout({
 }: {
   children: React.ReactNode;
 }) {
+  
   const userToSuggest = await getUserToSuggest();
 
   return (

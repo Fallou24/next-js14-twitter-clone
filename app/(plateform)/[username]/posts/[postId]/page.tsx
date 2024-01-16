@@ -4,7 +4,10 @@ import RepliesForm from "@/app/ui/postDetail/RepliesForm";
 import RepliesItem from "@/app/ui/postDetail/RepliesItem";
 import { notFound, redirect } from "next/navigation";
 import Post from "@/app/ui/shared/Post";
-
+import { Metadata } from "next";
+export const metadata: Metadata = {
+  title: 'Post',
+};
 export default async function page({ params }: { params: { postId: string } }) {
   const postId = params.postId;
   const post = await getPostById(postId);
