@@ -10,7 +10,7 @@ export default function PageHeader({
   return (
     <div className="page_header flex justify-between items-center gap-7">
       <div className="hidden lg:block">{children}</div>
-      <UserButton afterSignOutUrl="/sign-in"/>
+      <UserButton afterSignOutUrl="/"/>
       <div className="block lg:hidden">
         <Search />
       </div>
