@@ -1,6 +1,11 @@
-import { auth } from "@clerk/nextjs";
+import { auth, currentUser } from "@clerk/nextjs";
 import Feed from "../ui/home/feed/Feed";
+import { redirect } from "next/navigation";
 
-export default async function Home() { 
+export default async function Home() {
+  const user = await currentUser();
+  if (!user) {
+    redirect("/sign-in");
+  }
   return <Feed />;
 }
