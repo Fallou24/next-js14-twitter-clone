@@ -118,6 +118,7 @@ export async function getUserLikes(username: string) {
       username,
     },
   });
+
   try {
     const posts = await prisma.like.findMany({
       where: {
@@ -142,9 +143,11 @@ export async function getUserLikes(username: string) {
         },
       },
     });
+
     return posts.map((post) => post.post);
   } catch (e) {
     console.log(e);
+    throw new Error("Impossible d'avoir les posts aimé par " + username);
   }
 }
 
