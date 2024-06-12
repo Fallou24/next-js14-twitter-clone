@@ -22,3 +22,10 @@
 button:disabled{
     opacity: .7;
 }
+.messages{
+    width: 100%;
+}
+
+.chat__room{
+    height: calc(100vh - 150px)!important;
+}
