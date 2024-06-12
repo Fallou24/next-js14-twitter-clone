@@ -296,15 +296,44 @@ export async function getUserMessages() {
   const user = await currentUser();
   try {
     const messages = await prisma.message.findMany({
-      where:{
-        recipientId:user?.id
-      }
-    })
+      where: {
+        recipientId: user?.id,
+      },
+    });
 
-    return messages
+    return messages;
   } catch (e) {
     console.log(e);
-    
-    throw new Error("Impossible de recupérer les messages")
+
+    throw new Error("Impossible de recupérer les messages");
+  }
+}
+
+export async function getContacts(searchTerm: string) {
+  const user = await currentUser();
+  try {
+    const contacts = await prisma.profile.findMany({
+      where: {
+        id: { not: user?.id },
+        OR: [
+          {
+            username: {
+              contains: searchTerm,
+              mode: "insensitive",
+            },
+          },
+          {
+            fullName: {
+              contains: searchTerm,
+              mode: "insensitive",
+            },
+          },
+        ],
+      },
+    });
+    return contacts;
+  } catch (e) {
+    console.log(e);
+    throw new Error("Erreur");
   }
 }

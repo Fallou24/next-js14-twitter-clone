@@ -2,8 +2,13 @@
 import { MailPlus } from "lucide-react";
 import React, { useState } from "react";
 import StartConversationModal from "./StartConversationModal";
+import { Profile } from "@prisma/client";
 
-export default function StartConversation() {
+export default function StartConversation({
+  contacts,
+}: {
+  contacts: Profile[];
+}) {
   const [open, setOpen] = useState(false);
   function onClose() {
     setOpen(false);
@@ -14,7 +19,7 @@ export default function StartConversation() {
         <MailPlus />
       </div>
 
-      <StartConversationModal open={open} onClose={onClose} />
+      <StartConversationModal open={open} onClose={onClose} contacts={contacts} />
     </>
   );
 }
