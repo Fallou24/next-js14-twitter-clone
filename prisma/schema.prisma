@@ -23,6 +23,7 @@ model Profile {
   Like         Like[]
   follower     Follows[] @relation("followedBy")
   following    Follows[] @relation("following")
+  messages     Message[]
 
   @@map("profile")
 }
@@ -64,4 +65,15 @@ model Follows {
   updatedAt   DateTime @updatedAt
 
   @@map("follow")
+}
+
+model Message {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  content     String
+  sentAt      DateTime @default(now())
+  sender      Profile  @relation(fields: [senderId], references: [id])
+  senderId    String
+  recipientId String
+
+  @@map("messages")
 }

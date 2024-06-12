@@ -290,3 +290,21 @@ export async function getUserFollowings(username: string) {
     console.log(e);
   }
 }
+
+export async function getUserMessages() {
+  noStore();
+  const user = await currentUser();
+  try {
+    const messages = await prisma.message.findMany({
+      where:{
+        recipientId:user?.id
+      }
+    })
+
+    return messages
+  } catch (e) {
+    console.log(e);
+    
+    throw new Error("Impossible de recupérer les messages")
+  }
+}
