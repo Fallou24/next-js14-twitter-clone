@@ -2,7 +2,7 @@ import React from "react";
 import SingleMessage from "./SingleMessage";
 import MessageInput from "./MessageInput";
 
-export default function Conversation() {
+export default function ConversationRoom() {
   return (
     <div className="w-3/5 p-3">
       <div className="sticky top-3">

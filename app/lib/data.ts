@@ -321,36 +321,122 @@ export async function getContacts(searchTerm: string) {
   }
 }
 
-export async function getUserConversations() {
-  noStore()
+export async function getUserConversations(searchTerm?: string) {
+  noStore();
   const user = await currentUser();
+  if (searchTerm) {
+    try {
+      const conversations = await prisma.conversation.findMany({
+        where: {
+          AND: [
+            {
+              OR: [{ participant1Id: user?.id }, { participant2Id: user?.id }],
+            },
+            {
+              OR: [
+                {
+                  participant1: {
+                    OR: [
+                      {
+                        fullName: { contains: searchTerm, mode: "insensitive" },
+                      },
+                      {
+                        username: { contains: searchTerm, mode: "insensitive" },
+                      },
+                    ],
+                  },
+                },
+                {
+                  participant2: {
+                    OR: [
+                      {
+                        fullName: { contains: searchTerm, mode: "insensitive" },
+                      },
+                      {
+                        username: { contains: searchTerm, mode: "insensitive" },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          ],
+        },
+        include: {
+          participant1: true,
+          participant2: true,
+          messages: true,
+        },
+      });
+
+      const filteredConversations = conversations.map((conversation: any) => {
+        if (conversation.participant1Id === user?.id) {
+          const { participant1, ...rest } = conversation;
+          rest.recipient = rest.participant2;
+          delete rest.participant2;
+          return rest;
+        } else if (conversation.participant2Id === user?.id) {
+          const { participant2, ...rest } = conversation;
+          rest.recipient = rest.participant1;
+          delete rest.participant1;
+          return rest;
+        } else {
+          return conversation;
+        }
+      });
+  
+      return filteredConversations;
+    } catch (e) {
+      console.log(e);
+    }
+  }
   try {
     const conversations = await prisma.conversation.findMany({
       where: {
         OR: [{ participant1Id: user?.id }, { participant2Id: user?.id }],
       },
-      include:{
-        participant1:true,
-        participant2:true
+      include: {
+        participant1: true,
+        participant2: true,
+        messages: true,
+      },
+    });
+    const filteredConversations = conversations.map((conversation: any) => {
+      if (conversation.participant1Id === user?.id) {
+        const { participant1, ...rest } = conversation;
+        rest.recipient = rest.participant2;
+        delete rest.participant2;
+        return rest;
+      } else if (conversation.participant2Id === user?.id) {
+        const { participant2, ...rest } = conversation;
+        rest.recipient = rest.participant1;
+        delete rest.participant1;
+        return rest;
+      } else {
+        return conversation;
       }
     });
-    return conversations
+
+    return filteredConversations;
   } catch (e) {
     console.log(e);
   }
 }
 
-
-export async function searchConversation(searchTerm:string) {
+export async function searchConversation(searchTerm: string) {
+  const user = await currentUser();
   try {
-    prisma.conversation.findMany({
-      where:{
-        
-      }
-    })
+    const data = await prisma.conversation.findMany({
+      where: {
+        OR: [{ participant1Id: user?.id }, { participant2Id: user?.id }],
+      },
+      include: {
+        participant1: true,
+        participant2: true,
+      },
+    });
+    return data;
   } catch (e) {
     console.log(e);
-    
-
   }
 }
