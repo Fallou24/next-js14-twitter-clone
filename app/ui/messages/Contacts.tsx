@@ -1,10 +1,20 @@
+"use client";
+import { startConversation } from "@/app/lib/actions";
 import { Profile } from "@prisma/client";
 import Image from "next/image";
 import React from "react";
 
-export default function Contacts({ contact }: { contact: Profile }) {
+export default function Contacts({ contact,onClose }: { contact: Profile,onClose:()=>any }) {
   return (
-    <div className="flex gap-2 items-center  mb-2 p-2 px-4 cursor-pointer hover:bg-white hover:bg-opacity-10 ">
+    <div
+      onClick={async () => {
+       const data=await  startConversation(contact.id);
+       onClose()
+       console.log(data);
+       
+      }}
+      className="flex gap-2 items-center  mb-2 p-2 px-4 cursor-pointer hover:bg-white hover:bg-opacity-10 "
+    >
       <p className="w-[40px] h-[40px] relative overflow-hidden rounded-full">
         <Image
           src={contact.userImageUrl}

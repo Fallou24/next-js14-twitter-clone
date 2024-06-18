@@ -131,5 +131,35 @@ export async function followUser(id: string) {
       throw new Error("Impossible de suivre ce profile");
     }
   }
-  revalidatePath("/")
+  revalidatePath("/");
+}
+
+export async function startConversation(recipientId: string) {
+  const user = await currentUser();
+
+  try {
+    if (user) {
+      const conversation = await prisma.conversation.findFirst({
+        where: {
+          OR: [
+            { participant1Id: user.id, participant2Id: recipientId },
+            { participant1Id: recipientId, participant2Id: user.id },
+          ],
+        },
+      });
+      if (!conversation) {
+        const newConv = await prisma.conversation.create({
+          data: {
+            participant1Id: user.id,
+            participant2Id: recipientId,
+          },
+        });
+        revalidatePath("/messages");
+        return newConv;
+       
+      }
+    }
+  } catch (e) {
+    console.log(e);
+  }
 }

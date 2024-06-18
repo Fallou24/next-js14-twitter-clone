@@ -77,7 +77,7 @@ export default function StartConversationModal({
           <hr className="border-border-color border-1" />
 
           {contacts?.map((contact) => {
-            return <Contacts key={contact.id} contact={contact} />;
+            return <Contacts key={contact.id} contact={contact} onClose={onClose} />;
           })}
         </div>
       </div>

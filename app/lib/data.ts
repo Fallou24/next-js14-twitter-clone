@@ -291,25 +291,8 @@ export async function getUserFollowings(username: string) {
   }
 }
 
-export async function getUserMessages() {
-  noStore();
-  const user = await currentUser();
-  try {
-    const messages = await prisma.message.findMany({
-      where: {
-        recipientId: user?.id,
-      },
-    });
-
-    return messages;
-  } catch (e) {
-    console.log(e);
-
-    throw new Error("Impossible de recupérer les messages");
-  }
-}
-
 export async function getContacts(searchTerm: string) {
+  noStore();
   const user = await currentUser();
   try {
     const contacts = await prisma.profile.findMany({
@@ -335,5 +318,39 @@ export async function getContacts(searchTerm: string) {
   } catch (e) {
     console.log(e);
     throw new Error("Erreur");
+  }
+}
+
+export async function getUserConversations() {
+  noStore()
+  const user = await currentUser();
+  try {
+    const conversations = await prisma.conversation.findMany({
+      where: {
+        OR: [{ participant1Id: user?.id }, { participant2Id: user?.id }],
+      },
+      include:{
+        participant1:true,
+        participant2:true
+      }
+    });
+    return conversations
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+
+export async function searchConversation(searchTerm:string) {
+  try {
+    prisma.conversation.findMany({
+      where:{
+        
+      }
+    })
+  } catch (e) {
+    console.log(e);
+    
+
   }
 }
