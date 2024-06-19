@@ -1,17 +1,24 @@
 "use client";
 import { startConversation } from "@/app/lib/actions";
+import { useChatStore } from "@/store";
 import { Profile } from "@prisma/client";
 import Image from "next/image";
 import React from "react";
 
-export default function Contacts({ contact,onClose }: { contact: Profile,onClose:()=>any }) {
+export default function Contacts({
+  contact,
+  onClose,
+}: {
+  contact: Profile;
+  onClose: () => any;
+}) {
+  const startNewConversation = useChatStore((state) => state.startConversation);
   return (
     <div
       onClick={async () => {
-       const data=await  startConversation(contact.id);
-       onClose()
-       console.log(data);
-       
+        const data = await startConversation(contact.id);
+        onClose();
+        startNewConversation(data)
       }}
       className="flex gap-2 items-center  mb-2 p-2 px-4 cursor-pointer hover:bg-white hover:bg-opacity-10 "
     >

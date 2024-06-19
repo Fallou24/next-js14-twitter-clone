@@ -1,3 +1,5 @@
+"use client"
+import { useChatStore } from "@/store";
 import { currentUser } from "@clerk/nextjs";
 import { Conversation, Message, Profile } from "@prisma/client";
 import Image from "next/image";
@@ -9,10 +11,13 @@ interface Contact extends Conversation {
 }
 
 export default async function LastConversations({conversation}:{conversation:Contact}) {
-  const user = await currentUser()
+  
+  const startNewConversation = useChatStore((state)=>state.startConversation)
   
   return (
-  <div className="flex gap-2 items-center my-2 mb-3 mt-3 cursor-pointer hover:bg-white hover:bg-opacity-10 px-3 py-2">
+  <div className="flex gap-2 items-center my-2 mb-3 mt-3 cursor-pointer hover:bg-white hover:bg-opacity-10 px-3 py-2" onClick={()=>{
+    startNewConversation(conversation)
+  }}>
       <p className="relative h-[45px] w-[45px] rounded-full overflow-hidden">
         <Image
           src={conversation.recipient.userImageUrl}

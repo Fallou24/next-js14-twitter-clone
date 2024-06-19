@@ -70,14 +70,13 @@ model Follows {
 }
 
 model Message {
-  id             String        @id @default(auto()) @map("_id") @db.ObjectId
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
   content        String
-  sentAt         DateTime      @default(now())
-  sender         Profile       @relation(fields: [senderId], references: [id])
-  senderId       String
-  recipientId    String
-  conversation   Conversation? @relation(fields: [conversationId], references: [id])
-  conversationId String?       @db.ObjectId
+  createdAt      DateTime     @default(now())
+  authorId       String
+  conversationId String       @db.ObjectId
+  author         Profile      @relation(fields: [authorId], references: [id])
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
 
   @@map("messages")
 }

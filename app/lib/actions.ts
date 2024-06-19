@@ -148,15 +148,31 @@ export async function startConversation(recipientId: string) {
         },
       });
       if (!conversation) {
-        const newConv = await prisma.conversation.create({
+        const conversation: any = await prisma.conversation.create({
           data: {
             participant1Id: user.id,
             participant2Id: recipientId,
           },
+          include: {
+            participant1: true,
+            participant2: true,
+            messages: true,
+          },
         });
         revalidatePath("/messages");
-        return newConv;
-       
+        if (conversation.participant1Id === user?.id) {
+          const { participant1, ...rest } = conversation;
+          rest.recipient = rest.participant2;
+          delete rest.participant2;
+          return rest;
+        } else if (conversation.participant2Id === user?.id) {
+          const { participant2, ...rest } = conversation;
+          rest.recipient = rest.participant1;
+          delete rest.participant1;
+          return rest;
+        } else {
+          return conversation;
+        }
       }
     }
   } catch (e) {

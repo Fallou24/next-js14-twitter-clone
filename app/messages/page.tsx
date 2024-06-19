@@ -22,7 +22,7 @@ export default async function Messages({
     <div className="relative w-full">
       <div className=" messages flex">
         <ConversationList contacts={contacts} conversations={conversations} />
-        <ConversationRoom />
+        <ConversationRoom contacts={contacts} />
       </div>
     </div>
   );
