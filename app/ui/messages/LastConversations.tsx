@@ -10,7 +10,7 @@ interface Contact extends Conversation {
   messages:Message[]
 }
 
-export default async function LastConversations({conversation}:{conversation:Contact}) {
+export default  function LastConversations({conversation}:{conversation:Contact}) {
   
   const startNewConversation = useChatStore((state)=>state.startConversation)
   

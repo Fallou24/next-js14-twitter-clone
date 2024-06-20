@@ -5,6 +5,7 @@ import prisma from "./db";
 import { z } from "zod";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { Message } from "@prisma/client";
 
 const postSchema = z.object({
   content: z.string().min(1),
@@ -156,7 +157,6 @@ export async function startConversation(recipientId: string) {
           include: {
             participant1: true,
             participant2: true,
-            messages: true,
           },
         });
         revalidatePath("/messages");
@@ -177,5 +177,28 @@ export async function startConversation(recipientId: string) {
     }
   } catch (e) {
     console.log(e);
+  }
+}
+
+export async function createMessage(
+  conversationId: string,
+  formData: FormData
+) {
+  const user = await currentUser();
+  const messageText = formData.get("messageText");
+  if (user && messageText) {
+    const newMessage = {
+      content: messageText as string,
+      conversationId,
+      authorId: user.id!,
+    };
+    try { 
+      const messages = await prisma.message.create({
+        data: newMessage,
+      });
+      return messages;
+    } catch (e) {
+      console.log(e);
+    }
   }
 }

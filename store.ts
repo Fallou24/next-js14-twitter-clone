@@ -12,14 +12,22 @@ type State = {
 };
 
 type ChatState = {
-  currentConversaton: State | undefined;
+  currentConversation: State | undefined;
   startConversation: (conversation: State) => void;
+  setMessages: (messages: Message[]) => void;
+
+  messages: Message[];
+  addMessage: (message: Message) => void;
 };
 
 export const useChatStore = create<ChatState>((set) => ({
-  currentConversaton: undefined,
+  currentConversation: undefined,
+  messages: [],
+  setMessages: (messages) => set({ messages }),
+  addMessage: (message) =>
+    set((state) => ({ messages: [...state.messages, message] })),
   startConversation: (newConversation) =>
     set(() => {
-      return { currentConversaton: newConversation };
+      return { currentConversation: newConversation };
     }),
 }));

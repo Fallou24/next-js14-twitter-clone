@@ -1,21 +1,40 @@
 "use client";
-import React, { useState } from "react";
+import React, {
+  startTransition,
+  useEffect,
+  useOptimistic,
+  useState,
+} from "react";
 import SingleMessage from "./SingleMessage";
 import MessageInput from "./MessageInput";
 import { useChatStore } from "@/store";
 import StartConversationModal from "./StartConversationModal";
-import { Profile } from "@prisma/client";
+import { Message, Profile } from "@prisma/client";
 
 export default function ConversationRoom({
   contacts,
 }: {
   contacts: Profile[];
 }) {
-  const currentConversation = useChatStore((state) => state.currentConversaton);
+  const { currentConversation, messages, addMessage, setMessages } =
+    useChatStore();
+  const [optimisticMessages, setOptimisticMessage] =
+    useOptimistic<Message[]>(messages);
+  useEffect(() => {
+    if (currentConversation) {
+      setMessages(currentConversation.messages);
+      startTransition(() => {
+        setOptimisticMessage(currentConversation.messages);
+      });
+    }
+  }, [currentConversation, setOptimisticMessage]);
+  console.log(optimisticMessages, messages);
+
   const [open, setOpen] = useState(false);
   function onClose() {
     setOpen(false);
   }
+
   if (!currentConversation) {
     return (
       <div className="flex justify-center items-center w-3/5 p-3">
@@ -51,12 +70,14 @@ export default function ConversationRoom({
         <hr className="border-border-color border-1 mb-8" />
       </div>
       <div className="chat__room overflow-auto">
-        <SingleMessage />
-        <SingleMessage />
-        <SingleMessage />
-        <SingleMessage />
+        {optimisticMessages?.map((message: Message, index) => (
+          <SingleMessage key={index} message={message} />
+        ))}
       </div>
-      <MessageInput />
+      <MessageInput
+        conversationId={currentConversation.id}
+        setOptimisticMessage={setOptimisticMessage}
+      />
     </div>
   );
 }

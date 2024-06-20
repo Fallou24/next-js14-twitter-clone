@@ -1,15 +1,21 @@
+import { useUser } from "@clerk/nextjs";
+import { Message } from "@prisma/client";
+import clsx from "clsx";
 import React from "react";
 
-export default function SingleMessage() {
+export default function SingleMessage({ message }: { message: Message }) {
+  const { user } = useUser();
   return (
     <>
-      <p className=" max-w-xs bg-blue-color rounded-2xl p-2 ml-auto mb-4 rounded-br-none text-sm">
-        Dans l'obscurité de la nuit, la lueur d'une étoile solitaire éclaire
+      <p
+        className={clsx(
+          " max-w-xs w-max  rounded-2xl p-2 ml-auto mb-4 rounded-br-none text-sm",
+          { "bg-blue-color": message.authorId === user?.id },
+          { "bg-gray-color": message.authorId !== user?.id }
+        )}
+      >
+        {message.content}
       </p>
-      <p className=" max-w-xs bg-gray-color rounded-2xl p-2 mb-4 rounded-bl-none text-sm">
-      Dans l'obscurité de la nuit, la lueur d'une étoile solitaire éclaire
-    </p>
-   
     </>
   );
 }

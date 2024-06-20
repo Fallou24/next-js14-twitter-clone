@@ -4,9 +4,7 @@ import MessageInput from "../ui/messages/MessageInput";
 import {
   getContacts,
   getUserConversations,
-  searchConversation,
 } from "../lib/data";
-import { Conversation, Profile } from "@prisma/client";
 import ConversationRoom from "../ui/messages/ConversationRoom";
 
 export default async function Messages({

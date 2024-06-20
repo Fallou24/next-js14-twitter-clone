@@ -384,7 +384,7 @@ export async function getUserConversations(searchTerm?: string) {
           return conversation;
         }
       });
-  
+
       return filteredConversations;
     } catch (e) {
       console.log(e);
@@ -398,7 +398,7 @@ export async function getUserConversations(searchTerm?: string) {
       include: {
         participant1: true,
         participant2: true,
-        messages: true,
+        messages:true
       },
     });
     const filteredConversations = conversations.map((conversation: any) => {
@@ -418,24 +418,6 @@ export async function getUserConversations(searchTerm?: string) {
     });
 
     return filteredConversations;
-  } catch (e) {
-    console.log(e);
-  }
-}
-
-export async function searchConversation(searchTerm: string) {
-  const user = await currentUser();
-  try {
-    const data = await prisma.conversation.findMany({
-      where: {
-        OR: [{ participant1Id: user?.id }, { participant2Id: user?.id }],
-      },
-      include: {
-        participant1: true,
-        participant2: true,
-      },
-    });
-    return data;
   } catch (e) {
     console.log(e);
   }
