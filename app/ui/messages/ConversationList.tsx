@@ -19,7 +19,7 @@ export default async function ConversationList({
   return (
     <div className="w-2/5 border-x border-x-border-color min-h-screen">
       <div className="flex justify-between items-center mb-4 p-3">
-        <h1 className="font-medium text-xl">Messages</h1>
+        <h1 className="font-bold text-lg">Messages</h1>
         <StartConversation contacts={contacts} />
       </div>
       <SearchPrivateMessage />

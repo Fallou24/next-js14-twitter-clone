@@ -1,6 +1,4 @@
 "use client";
-import { searchConversation } from "@/app/lib/data";
-import { useUser } from "@clerk/nextjs";
 import { Search } from "lucide-react";
 import {
   redirect,
