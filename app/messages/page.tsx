@@ -1,11 +1,9 @@
 import React from "react";
 import ConversationList from "../ui/messages/ConversationList";
 import MessageInput from "../ui/messages/MessageInput";
-import {
-  getContacts,
-  getUserConversations,
-} from "../lib/data";
+import { getContacts, getUserConversations } from "../lib/data";
 import ConversationRoom from "../ui/messages/ConversationRoom";
+import { Conversation } from "@prisma/client";
 
 export default async function Messages({
   searchParams,

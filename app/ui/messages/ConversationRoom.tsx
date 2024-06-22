@@ -28,7 +28,6 @@ export default function ConversationRoom({
       });
     }
   }, [currentConversation, setOptimisticMessage]);
-  console.log(optimisticMessages, messages);
 
   const [open, setOpen] = useState(false);
   function onClose() {

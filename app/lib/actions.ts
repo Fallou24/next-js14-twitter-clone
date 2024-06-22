@@ -157,8 +157,10 @@ export async function startConversation(recipientId: string) {
           include: {
             participant1: true,
             participant2: true,
+            messages: true,
           },
         });
+
         revalidatePath("/messages");
         if (conversation.participant1Id === user?.id) {
           const { participant1, ...rest } = conversation;
@@ -192,11 +194,22 @@ export async function createMessage(
       conversationId,
       authorId: user.id!,
     };
-    try { 
+    try {
       const messages = await prisma.message.create({
         data: newMessage,
       });
+
+      await prisma.conversation.update({
+        where: {
+          id: messages.conversationId,
+        },
+        data: {
+          lastMessageDate: new Date(),
+        },
+      });
+      revalidatePath("/messages")
       return messages;
+
     } catch (e) {
       console.log(e);
     }

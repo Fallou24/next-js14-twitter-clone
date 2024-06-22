@@ -5,7 +5,7 @@ type State = {
   id: string;
   participant1Id: string;
   participant2Id: string;
-  createdAt: Date;
+  lastMessageDate: Date;
   updatedAt: Date;
   recipient: Profile;
   messages: Message[];
@@ -16,7 +16,7 @@ type ChatState = {
   startConversation: (conversation: State) => void;
   setMessages: (messages: Message[]) => void;
 
-  messages: Message[];
+  messages: Message[] | [];
   addMessage: (message: Message) => void;
 };
 
@@ -25,7 +25,7 @@ export const useChatStore = create<ChatState>((set) => ({
   messages: [],
   setMessages: (messages) => set({ messages }),
   addMessage: (message) =>
-    set((state) => ({ messages: [...state.messages, message] })),
+    set((state) => ({ messages: [...state?.messages, message] })),
   startConversation: (newConversation) =>
     set(() => {
       return { currentConversation: newConversation };

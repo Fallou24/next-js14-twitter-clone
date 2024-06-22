@@ -2,6 +2,7 @@ import { auth, currentUser, useUser } from "@clerk/nextjs";
 import { unstable_noStore as noStore } from "next/cache";
 import prisma from "./db";
 import { redirect } from "next/navigation";
+import { Conversation } from "@prisma/client";
 export async function getAllPost() {
   noStore();
   try {
@@ -367,6 +368,9 @@ export async function getUserConversations(searchTerm?: string) {
           participant2: true,
           messages: true,
         },
+        orderBy: {
+          lastMessageDate: "desc",
+        },
       });
 
       const filteredConversations = conversations.map((conversation: any) => {
@@ -398,7 +402,10 @@ export async function getUserConversations(searchTerm?: string) {
       include: {
         participant1: true,
         participant2: true,
-        messages:true
+        messages: true,
+      },
+      orderBy: {
+        lastMessageDate: "desc",
       },
     });
     const filteredConversations = conversations.map((conversation: any) => {
