@@ -11,18 +11,21 @@ datasource db {
 }
 
 model Profile {
-  id           String    @id @map("_id")
-  userImageUrl String
-  username     String    @unique
-  fullName     String
-  bio          String?
-  coverImg     String?
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  post         Post[]
-  Like         Like[]
-  follower     Follows[] @relation("followedBy")
-  following    Follows[] @relation("following")
+  id             String         @id @map("_id")
+  userImageUrl   String
+  username       String         @unique
+  fullName       String
+  bio            String?
+  coverImg       String?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  post           Post[]
+  Like           Like[]
+  follower       Follows[]      @relation("followedBy")
+  following      Follows[]      @relation("following")
+  messages       Message[]
+  conversations1 Conversation[] @relation("Participant1")
+  conversations2 Conversation[] @relation("Participant2")
 
   @@map("profile")
 }
@@ -64,4 +67,29 @@ model Follows {
   updatedAt   DateTime @updatedAt
 
   @@map("follow")
+}
+
+model Message {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  content        String
+  createdAt      DateTime     @default(now())
+  authorId       String
+  conversationId String       @db.ObjectId
+  author         Profile      @relation(fields: [authorId], references: [id])
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+
+  @@map("messages")
+}
+
+model Conversation {
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+  participant1    Profile   @relation("Participant1", fields: [participant1Id], references: [id])
+  participant1Id  String
+  participant2    Profile   @relation("Participant2", fields: [participant2Id], references: [id])
+  participant2Id  String
+  messages        Message[]
+  lastMessageDate DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@map("conversations")
 }

@@ -2,7 +2,7 @@
 
 import { useUser } from "@clerk/nextjs";
 import clsx from "clsx";
-import { Feather, HomeIcon, User } from "lucide-react";
+import { Feather, HomeIcon, Mail, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect, usePathname } from "next/navigation";
@@ -30,6 +30,11 @@ export default function Sidebar() {
       icon: User,
       href: "/" + user.username,
       active: pathName === "/" + user.username,
+    },
+    {
+      icon: Mail,
+      href: "/messages",
+      active: pathName === "/messages",
     },
   ];
   return (
