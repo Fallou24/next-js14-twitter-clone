@@ -6,6 +6,7 @@ import { z } from "zod";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { Message } from "@prisma/client";
+import Pusher from "pusher";
 
 const postSchema = z.object({
   content: z.string().min(1),
@@ -207,9 +208,16 @@ export async function createMessage(
           lastMessageDate: new Date(),
         },
       });
-      revalidatePath("/messages")
-      return messages;
-
+      const pusher = new Pusher({
+        appId: process.env.PUSHER_APP_ID as string,
+        key: process.env.NEXT_PUBLIC_PUSHER_KEY as string,
+        secret: process.env.PUSHER_SECRET as string,
+        cluster: "eu",
+        useTLS: true
+      });
+      
+      pusher.trigger("chat", "message",messages);
+      return messages
     } catch (e) {
       console.log(e);
     }
