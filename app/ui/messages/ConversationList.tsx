@@ -17,6 +17,10 @@ export default function ConversationList({
   conversations: Contact[];
 }) {
   const [conversationList, setConversationList] = useState(conversations);
+
+  useEffect(() => {
+    setConversationList(conversations);
+  }, [conversations]);
   useEffect(() => {
     const pusher = new pusherJs(process.env.NEXT_PUBLIC_PUSHER_KEY as string, {
       cluster: "eu",
