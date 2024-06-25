@@ -158,7 +158,7 @@ export async function startConversation(recipientId: string) {
           include: {
             participant1: true,
             participant2: true,
-            messages:true
+            messages: true,
           },
         });
         const pusher = new Pusher({
@@ -166,12 +166,11 @@ export async function startConversation(recipientId: string) {
           key: process.env.NEXT_PUBLIC_PUSHER_KEY as string,
           secret: process.env.PUSHER_SECRET as string,
           cluster: "eu",
-          useTLS: true
+          useTLS: true,
         });
-        
-        pusher.trigger("chatRoom", "conversations",conversation);
-       return conversation
-        
+
+       await pusher.trigger("chatRoom", "conversations", conversation);
+        return conversation;
       }
     }
   } catch (e) {
@@ -209,12 +208,11 @@ export async function createMessage(
         key: process.env.NEXT_PUBLIC_PUSHER_KEY as string,
         secret: process.env.PUSHER_SECRET as string,
         cluster: "eu",
-        useTLS: true
+        useTLS: true,
       });
-      
-      pusher.trigger("chat", "message",messages);
-      revalidatePath("/messages")
-      return messages
+
+      await pusher.trigger("chat", "message", messages);
+      return messages;
     } catch (e) {
       console.log(e);
     }
