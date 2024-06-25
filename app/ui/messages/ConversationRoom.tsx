@@ -22,9 +22,7 @@ export default function ConversationRoom({
   useEffect(() => {
     function getMessages() {
       try {
-        fetch(
-          process.env.BASE_URL + "/api/messages/" + currentConversation?.id!
-        )
+        fetch(process.env.BASE_URL + "api/messages/" + currentConversation?.id!)
           .then((res) => res.json())
           .then((data) => {
             setMessages(data);
