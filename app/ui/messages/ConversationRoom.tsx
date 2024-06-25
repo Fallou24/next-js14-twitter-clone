@@ -10,24 +10,46 @@ import MessageInput from "./MessageInput";
 import { useChatStore } from "@/store";
 import StartConversationModal from "./StartConversationModal";
 import { Message, Profile } from "@prisma/client";
+import pusherJs from "pusher-js";
 
 export default function ConversationRoom({
   contacts,
 }: {
   contacts: Profile[];
 }) {
-  const { currentConversation, messages, addMessage, setMessages } =
-    useChatStore();
-  const [optimisticMessages, setOptimisticMessage] =
-    useOptimistic<Message[]>(messages);
+  const { currentConversation } = useChatStore();
+  const [messages, setMessages] = useState<Message[]>([]);
   useEffect(() => {
-    if (currentConversation) {
-      setMessages(currentConversation.messages);
-      startTransition(() => {
-        setOptimisticMessage(currentConversation.messages);
-      });
+    function getMessages() {
+      try {
+        fetch(
+          process.env.BASE_URL + "/api/messages/" + currentConversation?.id!
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            setMessages(data);
+          });
+      } catch (e) {
+        console.log(e);
+      }
     }
-  }, [currentConversation, setOptimisticMessage]);
+    currentConversation && getMessages();
+  }, [currentConversation]);
+
+  useEffect(() => {
+    const pusher = new pusherJs(process.env.NEXT_PUBLIC_PUSHER_KEY as string, {
+      cluster: "eu",
+    });
+
+    const channel = pusher.subscribe("chat");
+    channel.bind("message", function (data: Message) {
+      setMessages((prevMessages) => [...prevMessages, data]);
+    });
+
+    return () => {
+      pusher.unsubscribe("chat");
+    };
+  }, []);
 
   const [open, setOpen] = useState(false);
   function onClose() {
@@ -69,14 +91,11 @@ export default function ConversationRoom({
         <hr className="border-border-color border-1 mb-8" />
       </div>
       <div className="chat__room overflow-auto">
-        {optimisticMessages?.map((message: Message, index) => (
+        {messages?.map((message: Message, index) => (
           <SingleMessage key={index} message={message} />
         ))}
       </div>
-      <MessageInput
-        conversationId={currentConversation.id}
-        setOptimisticMessage={setOptimisticMessage}
-      />
+      <MessageInput conversationId={currentConversation.id} />
     </div>
   );
 }

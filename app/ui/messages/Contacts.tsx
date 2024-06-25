@@ -1,6 +1,7 @@
 "use client";
 import { startConversation } from "@/app/lib/actions";
 import { useChatStore } from "@/store";
+import { useUser } from "@clerk/nextjs";
 import { Profile } from "@prisma/client";
 import Image from "next/image";
 import React from "react";
@@ -13,12 +14,25 @@ export default function Contacts({
   onClose: () => any;
 }) {
   const startNewConversation = useChatStore((state) => state.startConversation);
+  const { user } = useUser();
   return (
     <div
       onClick={async () => {
-        const data = await startConversation(contact.id);
         onClose();
-        startNewConversation(data)
+        const conversation = await startConversation(contact.id);
+        if (conversation?.participant1Id === user?.id) {
+          const { participant1, ...rest } = conversation;
+          rest.recipient = rest.participant2;
+          delete rest.participant2;
+          startNewConversation(rest);
+        } else if (conversation?.participant2Id === user?.id) {
+          const { participant2, ...rest } = conversation;
+          rest.recipient = rest.participant1;
+          delete rest.participant1;
+          startNewConversation(rest);
+        } else {
+          return;
+        }
       }}
       className="flex gap-2 items-center  mb-2 p-2 px-4 cursor-pointer hover:bg-white hover:bg-opacity-10 "
     >
