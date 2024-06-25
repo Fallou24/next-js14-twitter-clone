@@ -9,9 +9,9 @@ export default function SingleMessage({ message }: { message: Message }) {
     <>
       <p
         className={clsx(
-          " max-w-xs w-max  rounded-2xl p-2 ml-auto mb-4 rounded-br-none text-sm",
-          { "bg-blue-color": message.authorId === user?.id },
-          { "bg-gray-color": message.authorId !== user?.id }
+          " max-w-xs w-max p-2 mb-4 text-sm",
+          { "bg-blue-color ml-auto rounded-2xl rounded-br-none ": message.authorId === user?.id },
+          { "bg-gray-color rounded-2xl rounded-bl-none": message.authorId !== user?.id }
         )}
       >
         {message.content}

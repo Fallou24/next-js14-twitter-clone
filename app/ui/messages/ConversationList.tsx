@@ -1,16 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Search from "../home/rightBar/Search";
 import LastConversations from "./LastConversations";
 import SearchPrivateMessage from "./SearchPrivateMessage";
-import { MailPlus } from "lucide-react";
 import StartConversation from "./StartConversation";
 import { Conversation, Message, Profile } from "@prisma/client";
-import { getUserConversations } from "@/app/lib/data";
 import pusherJs from "pusher-js";
 import { useUser } from "@clerk/nextjs";
 interface Contact extends Conversation {
-  messages:Message[]
+  messages: Message[];
 }
 export default function ConversationList({
   contacts,
@@ -32,6 +29,36 @@ export default function ConversationList({
 
     return () => {
       pusher.unsubscribe("chatRoom");
+    };
+  }, []);
+
+  useEffect(() => {
+    const pusher = new pusherJs(process.env.NEXT_PUBLIC_PUSHER_KEY as string, {
+      cluster: "eu",
+    });
+
+    const channel = pusher.subscribe("chat");
+    channel.bind("message", function (data: Message) {
+      setConversationList((prevConversations: Contact[]) => {
+        const updatedConversations = prevConversations.map((conversation) => {
+          if (conversation.id === data.conversationId) {
+            return {
+              ...conversation,
+              lastMessageDate: data.createdAt,
+            };
+          }
+          return conversation;
+        });
+        return updatedConversations.sort(
+          (a, b) =>
+            new Date(b.lastMessageDate).getTime() -
+            new Date(a.lastMessageDate).getTime()
+        );
+      });
+    });
+
+    return () => {
+      pusher.unsubscribe("chat");
     };
   }, []);
   const { user } = useUser();
