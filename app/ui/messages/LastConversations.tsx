@@ -1,10 +1,11 @@
 "use client";
 import { useChatStore } from "@/store";
 import { currentUser } from "@clerk/nextjs";
-import {  Conversation, Message, Profile } from "@prisma/client";
+import { Conversation, Message, Profile } from "@prisma/client";
 import clsx from "clsx";
 import Image from "next/image";
-import React from "react";
+import pusherJs from "pusher-js";
+import React, { useEffect, useState } from "react";
 
 interface Contact extends Conversation {
   recipient: Profile;
@@ -16,12 +17,32 @@ export default function LastConversations({
 }: {
   conversation: Contact;
 }) {
+  const [lastMessage, setLastMessage] = useState(
+    conversation?.messages[conversation?.messages.length - 1]
+      ? conversation?.messages[conversation?.messages.length - 1].content
+      : ""
+  );
   const startNewConversation = useChatStore((state) => state.startConversation);
   const currentConversation = useChatStore(
     (state) => state.currentConversation
   );
-  const lastMessage = conversation?.messages[conversation?.messages.length - 1];
 
+  useEffect(() => {
+    const pusher = new pusherJs(process.env.NEXT_PUBLIC_PUSHER_KEY as string, {
+      cluster: "eu",
+    });
+
+    const channel = pusher.subscribe("chat");
+    channel.bind("message", function (data: Message) {
+      (data.conversationId === conversation.id &&
+        setLastMessage(data.content)) ||
+        "";
+    });
+
+    return () => {
+      pusher.unsubscribe("chat");
+    };
+  }, []);
   return (
     <div
       className={clsx(
@@ -50,9 +71,7 @@ export default function LastConversations({
           </span>
           <span className="text-gray-100 text-opacity-70 text-sm">20 juin</span>
         </p>
-        <p className="text-gray-100 text-opacity-70 text-sm">
-          {lastMessage?.content}
-        </p>
+        <p className="text-gray-100 text-opacity-70 text-sm">{lastMessage}</p>
       </div>
     </div>
   );

@@ -158,24 +158,20 @@ export async function startConversation(recipientId: string) {
           include: {
             participant1: true,
             participant2: true,
-            messages: true,
+            messages:true
           },
         });
-
-        revalidatePath("/messages");
-        if (conversation.participant1Id === user?.id) {
-          const { participant1, ...rest } = conversation;
-          rest.recipient = rest.participant2;
-          delete rest.participant2;
-          return rest;
-        } else if (conversation.participant2Id === user?.id) {
-          const { participant2, ...rest } = conversation;
-          rest.recipient = rest.participant1;
-          delete rest.participant1;
-          return rest;
-        } else {
-          return conversation;
-        }
+        const pusher = new Pusher({
+          appId: process.env.PUSHER_APP_ID as string,
+          key: process.env.NEXT_PUBLIC_PUSHER_KEY as string,
+          secret: process.env.PUSHER_SECRET as string,
+          cluster: "eu",
+          useTLS: true
+        });
+        
+        pusher.trigger("chatRoom", "conversations",conversation);
+       return conversation
+        
       }
     }
   } catch (e) {
@@ -217,6 +213,7 @@ export async function createMessage(
       });
       
       pusher.trigger("chat", "message",messages);
+      revalidatePath("/messages")
       return messages
     } catch (e) {
       console.log(e);

@@ -366,30 +366,14 @@ export async function getUserConversations(searchTerm?: string) {
         include: {
           participant1: true,
           participant2: true,
-          messages: true,
+          messages:true
         },
         orderBy: {
           lastMessageDate: "desc",
         },
       });
 
-      const filteredConversations = conversations.map((conversation: any) => {
-        if (conversation.participant1Id === user?.id) {
-          const { participant1, ...rest } = conversation;
-          rest.recipient = rest.participant2;
-          delete rest.participant2;
-          return rest;
-        } else if (conversation.participant2Id === user?.id) {
-          const { participant2, ...rest } = conversation;
-          rest.recipient = rest.participant1;
-          delete rest.participant1;
-          return rest;
-        } else {
-          return conversation;
-        }
-      });
-
-      return filteredConversations;
+     return conversations
     } catch (e) {
       console.log(e);
     }
@@ -408,23 +392,7 @@ export async function getUserConversations(searchTerm?: string) {
         lastMessageDate: "desc",
       },
     });
-    const filteredConversations = conversations.map((conversation: any) => {
-      if (conversation.participant1Id === user?.id) {
-        const { participant1, ...rest } = conversation;
-        rest.recipient = rest.participant2;
-        delete rest.participant2;
-        return rest;
-      } else if (conversation.participant2Id === user?.id) {
-        const { participant2, ...rest } = conversation;
-        rest.recipient = rest.participant1;
-        delete rest.participant1;
-        return rest;
-      } else {
-        return conversation;
-      }
-    });
-
-    return filteredConversations;
+    return conversations
   } catch (e) {
     console.log(e);
   }

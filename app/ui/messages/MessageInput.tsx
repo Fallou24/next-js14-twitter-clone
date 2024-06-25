@@ -11,11 +11,7 @@ export default function MessageInput({
 }: {
   conversationId: string;
 }) {
-  const {
-    currentConversation,
-    messages: conversationMessages,
-    addMessage,
-  } = useChatStore();
+  
   const { user } = useUser();
   const router = useRouter();
   const ref = useRef<HTMLFormElement>(null);
